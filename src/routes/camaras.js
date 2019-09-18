@@ -1,12 +1,20 @@
 const router = require("express").Router();
 
 const Cam = require("../models/Camara");
-
+var titulop = "";
 
 router.get('/camaras/add', (req, res) => {
-    res.render('camaras/add-cam');
+    res.render('camaras/add-cam', {
+        helpers: {
+            if_eq: function (a, b, opts) {
+                if (a == b)
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this); }
+        }
+    });
 })
-router.post('/camaras/add/new', (req, res) => {
+router.post('/camaras/add/new', async (req, res) => {
     const { name, source} = req.body;
     let { enable, visible } = req.body;
     const errors = [];
@@ -20,22 +28,39 @@ router.post('/camaras/add/new', (req, res) => {
         res.render('camaras/add-cam',{
             errors,
             name,
-            source
+            source,
+            enable,
+            visible,
+            helpers: {
+                if_eq: function (a, b, opts) {
+                    if (a == b)
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                }
+            }
         })
     }else{
         if(!enable){enable="off"};
         if(!visible){visible="off"};
         const newCam = new Cam({name, source, enable, visible});
-        console.log(newCam);
-        res.send('ok');
-    }
-})
-router.get('/camaras/', (req, res) => {
+        //console.log(newCam);
+        await newCam.save();
+        res.redirect('/camaras/list');
+    };
+});
+router.get('/camaras', (req, res) => {
     res.render('camaras');
 });
 
-router.get('/camaras/:id', (req, res) => {
-    res.send('Camaras',req.param('id'));
+router.get('/camaras/edit/:id', (req, res) => {
+    res.render('camaras/cam');
+});
+
+router.get('/camaras/list', async (req, res) => {
+    const camaras = await Cam.find().sort({date: "desc"});
+    titulop = "Camaras";
+    res.render('camaras/list-cams', { camaras, titulop });
 });
 
 module.exports = router;

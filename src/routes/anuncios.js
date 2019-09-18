@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
 router.get('/anuncios/', (req, res) => {
-    res.send('Anuncios');
+    var titulop = "Anuncios";
+    res.send('Anuncios',{ titulop });
 });
 
 

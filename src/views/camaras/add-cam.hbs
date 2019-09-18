@@ -22,11 +22,11 @@
                     </div>      
 
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" name="enable" checked id="exampleCheck1">
+                        <input type="checkbox" class="form-check-input" name="enable" {{#if_eq enable "on" }} checked {{/if_eq}} id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Enable</label>
                     </div>
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" name="visible" id="exampleCheck2">
+                        <input type="checkbox" class="form-check-input" name="visible" {{#if_eq visible "on" }} checked {{/if_eq}} id="exampleCheck2">
                         <label class="form-check-label" for="exampleCheck2">Visible</label>
                     </div>
                     <button class="btn btn-primary btn-block mt-2" type="submit">Agregar</button>
