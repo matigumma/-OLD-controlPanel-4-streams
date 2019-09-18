@@ -34,6 +34,10 @@ app.use(expressSession({
 }));
 
 //global vars
+const Cam = require("./models/Camara");
+Cam.find().sort({date: "desc"}).then((r)=>{
+    const camlist = r;
+});
 
 //routes
 app.use(require('./routes/index'));
