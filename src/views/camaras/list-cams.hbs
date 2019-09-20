@@ -1,5 +1,7 @@
-<div class="d-md-flex">
-<table class="table table-sm table-borderless table-hover">
+{{#if camaras}}
+<button class="btn btn-secondary m-2" onclick="location.assign('/camaras/add');">Agregar</button>
+<div class="col-md-12">
+<table class="table table-md table-hover">
     <thead>
         <tr>
             <th scope="col">Cam Name</th>
@@ -11,14 +13,24 @@
     </thead>
     <tbody>
         {{#each camaras}}
-        <tr onclick="location.assign('/camaras/{{_id}}');">
+        <tr onclick="location.assign('/camaras/edit/{{_id}}');">
             <td><i class="fas fa-edit"></i> {{name}}</td>
             <td>{{source}}</td>
             <td>{{enable}}</td>
             <td>{{visible}}</td>
-            <td>{{date}}</td>
+            <td><button type="button" disabled class="btn btn-secondary" title="{{date}}">
+                Fecha
+            </button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 </div>
+{{else}}
+<div class="card m-2 mx-auto">
+    <div class="card-body">
+        <p>No cameras!</p>
+        <a href="/camaras/add" class="btn btn-success btn-block">+ Here</a>
+    </div>
+</div>
+{{/if}}

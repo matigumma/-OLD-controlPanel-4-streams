@@ -3,10 +3,7 @@ const path = require("path");
 const hbs = require("express-handlebars");
 const methodOverride = require("method-override");
 const expressSession = require("express-session");
-
-
-
-
+const flash = require('connect-flash');
 
 //initializations
 const app = express();
@@ -32,11 +29,14 @@ app.use(expressSession({
     resave: true,
     saveUninitialized: true
 }));
+app.use(flash());
 
 //global vars
-const Cam = require("./models/Camara");
-Cam.find().sort({date: "desc"}).then((r)=>{
-    const camlist = r;
+app.use((req, res, next) =>{
+    res.locals.msg_exito = req.flash('msg_exito');
+    res.locals.msg_error = req.flash('msg_error');
+    res.locals.msg_info = req.flash('msg_info');
+    next();
 });
 
 //routes

@@ -4,10 +4,6 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/camaras', (req, res) => {
-    res.render('camaras');
-});
-
 router.get('/anuncios', (req, res) => {
     res.render('anuncios');
 });

@@ -1,11 +1,14 @@
 const router = require("express").Router();
 
-const Cam = require("../models/Camara");
-var titulop = "";
+const Cam = require("../models/Camara");//model
 
+router.get('/camaras', async (req, res) => {
+    const camaras = await Cam.find().sort({ date: "desc" });
+    res.render('camaras/list-cams', { camaras });
+});
 router.get('/camaras/add', (req, res) => {
     res.render('camaras/add-cam', {
-        helpers: {
+        helpers: {// if_eq del checkbox
             if_eq: function (a, b, opts) {
                 if (a == b)
                     return opts.fn(this);
@@ -13,16 +16,16 @@ router.get('/camaras/add', (req, res) => {
                     return opts.inverse(this); }
         }
     });
-})
-router.post('/camaras/add/new', async (req, res) => {
+});
+router.post('/camaras/add', async (req, res) => {
     const { name, source} = req.body;
     let { enable, visible } = req.body;
     const errors = [];
     if(!name){
-        errors.push({text: 'Insert name'});
+        errors.push({text: 'Please Insert name'});
     }
     if(!source){
-        errors.push({text: 'Insert source'});
+        errors.push({text: 'Please Insert source'});
     }
     if(errors.length > 0){
         res.render('camaras/add-cam',{
@@ -43,24 +46,40 @@ router.post('/camaras/add/new', async (req, res) => {
     }else{
         if(!enable){enable="off"};
         if(!visible){visible="off"};
-        const newCam = new Cam({name, source, enable, visible});
-        //console.log(newCam);
+        const newCam = new Cam({name, source, enable, visible});//data model
         await newCam.save();
-        res.redirect('/camaras/list');
+        req.flash('msg_exito', 'Camara agregada!');
+        res.redirect('/camaras');
     };
 });
-router.get('/camaras', (req, res) => {
-    res.render('camaras');
+router.get('/camaras/edit/:id', async (req, res) => {
+    const thiscam = await Cam.findById(req.params.id);
+    res.render('camaras/cam', { thiscam,
+        helpers: {
+            if_eq: function (a, b, opts) {
+                if (a == b)
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this);
+            }
+        }
+    })
 });
-
-router.get('/camaras/edit/:id', (req, res) => {
-    res.render('camaras/cam');
+router.put('/camaras/edit/:id', async (req, res) =>{
+    console.log(req.body);
+    const { name, source } = req.body;
+    let { enable, visible } = req.body;
+    if (!enable) { enable = "off" };
+    if (!visible) { visible = "off" };
+    await Cam.findByIdAndUpdate(req.params.id, {name, source, enable, visible});
+    req.flash('msg_exito', 'Camara modificada!');
+    res.redirect('/camaras');
 });
-
-router.get('/camaras/list', async (req, res) => {
-    const camaras = await Cam.find().sort({date: "desc"});
-    titulop = "Camaras";
-    res.render('camaras/list-cams', { camaras, titulop });
-});
+router.delete('/camaras/delete/:id', async (req, res) =>{
+    console.log(req.body, req.params);
+    await Cam.findByIdAndDelete(req.params.id);
+    req.flash('msg_info', 'Camara borrada!');
+    res.redirect('/camaras');
+})
 
 module.exports = router;
