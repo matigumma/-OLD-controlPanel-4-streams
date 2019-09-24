@@ -13,6 +13,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                {{#if user.name}}
                 <li class="nav-item">
                     <a class="nav-link" href="/camaras">Camaras</a>
                 </li>
@@ -23,12 +24,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/settings">Config</a>
                 </li>
-                
+                {{/if}}
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-            </form>
+            {{#if_eq user.name null}}
+            <a class="btn btn-outline-info my-2 my-sm-0" href="/users/signup">SignUp</a>
+             -
+            <a class="btn btn-outline-success my-2 my-sm-0" href="/users/signin">SignIn</a>
+             -
+            {{/if_eq}}
+            {{#if user.name}}
+            <a class="btn btn-outline-success my-2 my-sm-0" href="/users/signout">Sign Out</a>
+            {{/if}}
         </div>
         <div id="listadoCamaras" class="navbar-collapse offcanvas-collapse">
             <ul class="navbar-nav mr-auto">

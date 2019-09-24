@@ -1,1 +1,27 @@
-<h1> hola sign in </h1>
+<div class="col-md-4 mt-5 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            Login de Usuario
+        </div>
+        <div class="card-body">
+            <form action="/users/signin" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" value="{{name}}"
+                        placeholder="Nombre de usuario">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" value="{{email}}"
+                        placeholder="Direccion de e-mail">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Tu password">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
