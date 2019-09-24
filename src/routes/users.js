@@ -2,7 +2,23 @@ const router = require("express").Router();
 const User = require('../models/User');
 const passport = require('passport');
 
-router.get('/users/signin', (req, res) => {
+router.get('/users/list', async (req, res) => {
+    const listado = await User.find();
+    console.log(listado);
+    res.render('users/list', {listado,helpers: {// if_eq del checkbox
+        if_eq: function (a, b, opts) {
+            if (a == b)
+                return opts.fn(this);
+            else
+                return opts.inverse(this);
+        }
+    }});
+})
+
+router.get('/users/signin', async (req, res) => {
+    //await User.deleteOne({"email": "matias@gmail.com"});
+    //const listUsers = await User.find();
+    //console.log(listUsers);
     res.render('users/signin', {helpers: {// if_eq del checkbox
         if_eq: function (a, b, opts) {
             if (a == b)

@@ -1,0 +1,23 @@
+<button class="btn btn-secondary m-2" onclick="location.assign('/users/add');">Agregar</button>
+{{#if listado}}
+<div class="col-md-12">
+<table class="table table-md table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">email</th>
+            <th scope="col">created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each listado}}
+        <tr onclick="location.assign('/camaras/edit/{{_id}}');">
+            <td><i class="fas fa-edit"></i> {{name}}</td>
+            <td>{{email}}</td>
+            <td>{{date}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
+{{/if}}
