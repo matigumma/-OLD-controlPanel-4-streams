@@ -65,7 +65,7 @@ router.post('/users/signup', async (req, res) =>{
         }
         const newUser = new User({name, email, password});
         newUser.password = await newUser.encryptPassword(password);
-        await newUser.save();
+        await newUser.save(function (err) { req.flash('msg_error', 'Error saving to database'); res.render('users/signup', { errors, name, email }) });
         req.flash('msg_exito', 'Success registry!');
         res.redirect('/users/signin');
     }

@@ -57,7 +57,24 @@ router.post('/camaras/add', isAuthenticated, async (req, res) => {
         if(!enable){enable="off"};
         if(!visible){visible="off"};
         const newCam = new Cam({name, source, enable, visible});//data model
-        await newCam.save();
+        await newCam.save(function (err) {
+            req.flash('msg_error', 'Error saving to database'); 
+            res.render('camaras/add-cam', {
+                errors,
+                name,
+                source,
+                enable,
+                visible,
+                helpers: {
+                    if_eq: function (a, b, opts) {
+                        if (a == b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                }
+            })
+        });
         req.flash('msg_exito', 'Camara agregada!');
         res.redirect('/camaras');
     };

@@ -10,4 +10,4 @@ const CamSchema = new Schema({
     date: { type: Date, default: Date.now }
 })
 
-module.exports = mongoose.model('Cam', CamSchema);
+module.exports = mongoose.model('Cam', CamSchema, 'cameras');
