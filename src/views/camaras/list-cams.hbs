@@ -1,36 +1,37 @@
-<button class="btn btn-secondary m-2" onclick="location.assign('/camaras/add');">Agregar</button>
-{{#if camaras}}
-<div class="col-md-12">
-<table class="table table-md table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Cam Name</th>
-            <th scope="col">Source</th>
-            <th scope="col">Enable</th>
-            <th scope="col">Visible</th>
-            <th scope="col">Date updated</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each camaras}}
-        <tr onclick="location.assign('/camaras/edit/{{_id}}');">
-            <td><i class="fas fa-edit"></i> {{name}}</td>
-            <td>{{source}}</td>
-            <td>{{enable}}</td>
-            <td>{{visible}}</td>
-            <td><button type="button" disabled class="btn btn-secondary" title="{{date}}">
-                Fecha
-            </button></td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+<div class="container">
+<div class="row">
+ <button class="btn btn-secondary btn-block my-2" onclick="location.assign('/camaras/add');">Agregar</button>
+
+ {{#if camaras}}
+    {{#each camaras}}
+        <div class="card {{#if_eq enable 'on'}}{{#if_eq visible 'on'}}border-primary{{/if_eq}}{{/if_eq}} col-md-3 p-0 mb-2">
+            <div role="button" data-toggle="collapse" data-target="#c{{_id}}" aria-expanded="false" aria-controls="c{{_id}}" class="card-header {{#if_eq enable 'on'}}bg-light{{else}}bg-secondary text-white{{/if_eq}}">
+                <div class="row justify-content-between">
+                    <div class="col custom-control custom-switch"> 
+                        <input type="checkbox" {{#if_eq enable "on"}}checked{{/if_eq}} class="custom-control-input"
+                        alt="{{_id}}" disabled id="{{_id}}"> 
+                        <label class="custom-control-label" for="{{_id}}">{{name}}</label> 
+                    </div>
+                    <div class="col text-right">
+                        {{#if_eq visible 'on'}}<span class="mr-auto"><i class="fas fa-eye"></i></span>{{else}}<span class="mr-auto"><i class="fas fa-eye-slash"></i></span>{{/if_eq}}
+                    </div>
+                </div>
+            </div>
+            <div class="collapse card-body p-0" id="c{{_id}}">
+                <img src="http://srv.freewaves.live:8080/images/cardiel.jpg" class="card-img m-0" alt="...">
+                <p class="p-2">{{source}}</p>
+                <button class="btn border btn-light btn-block mb-0" onclick="location.assign('/camaras/edit/{{_id}}');">Editar</button>
+            </div>
+            <!--
+            <div class="card-footer">
+                <div class="row text-center">
+                    <div class="col rounded {{#if_eq enable 'on'}}bg-success text-white{{else}}bg-light{{/if_eq}}">Enable: {{enable}}</div>
+                    <div class="col rounded {{#if_eq visible 'on'}}bg-primary text-white{{else}}bg-light{{/if_eq}}">Visible: {{visible}}</div>
+                </div>
+            </div>
+            -->
+        </div>
+    {{/each}}
+ {{/if}}
 </div>
-{{else}}
-<div class="card m-2 mx-auto">
-    <div class="card-body">
-        <p>No cameras!</p>
-        <a href="/camaras/add" class="btn btn-success btn-block">+ Here</a>
-    </div>
 </div>
-{{/if}}

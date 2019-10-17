@@ -1,42 +1,110 @@
     <div class="col-md-4 mt-2">
         <div class="card bg-primary text-white">
             <div class="card-header">
-                <h5>Agregar nueva camara</h5>
+                <h5>Agregar una nueva camara</h5>
             </div>
             <div class="card-body">
-                <form action="/camaras/add" method="POST">
-                    <div class="form-group">
-                        <input type="text" name="name" value="{{name}}" placeholder="Nombre de la camara (ej.: Norte)" class="form-control">
+<form action="/camaras/add" method="POST">
+                    <div class="form-row mb-3">
+                        <div class="col ">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="exampleCheck1">
+                                <i class="fas fa-check mx-2"></i>
+                                <input type="checkbox" class="form-check-input" name="enable" {{#if_eq enable "on" }} checked {{/if_eq}}
+                                    id="exampleCheck1">
+                                    Enable</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="exampleCheck2">
+                                <i class="fas fa-eye mx-2"></i>
+                                <input type="checkbox" class="form-check-input" name="visible" {{#if_eq visible "on" }} checked {{/if_eq}}
+                                    id="exampleCheck2">
+                                    Visible</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="text" name="source" value="{{source}}" placeholder="Origen (ej.: rtsp://...)" class="form-control">
+                    <div class="form-label-group">
+                        <input id="name" type="text" name="name" value="{{name}}" placeholder="Nombre de la camara" class="form-control" required>
+                        <label for="name">Nombre de la camara</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="slug" type="text" name="slug" value="{{slug}}" placeholder="Url de la camara" class="form-control" onkeypress="return AvoidSpace(event)" required>
+                        <label for="slug">Url de la camara</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="title" type="text" name="title" value="{{title}}" placeholder="Titulo de la camara" class="form-control" required>
+                        <label for="title">Titulo de la camara</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="source" type="text" name="source" value="{{source}}" placeholder="Origen" class="form-control" required>
+                        <label for="source">Origen</label>
                     </div>      
+                    <div class="form-label-group">
+                        <input id="ffmpeg" type="text" name="ffmpeg" value="{{ffmpeg}}" placeholder="Instruccion ffmpeg especial" class="form-control">
+                        <label for="ffmpeg">Instruccion ffmpeg especial</label>
+                    </div>
+                    
                     <div class="form-row">
                         <div class="col">
-                            <h5>Status:</h5>
-                        </div>
-                        <div class="col">
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" name="enable" {{#if_eq enable "on" }} checked {{/if_eq}} id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Enable</label>
+                            <div class="form-label-group">
+                                <input id="lat" type="text" name="lat" value="{{lat}}" placeholder="Latitud" class="form-control">
+                                <label for="lat">Latitud</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" name="visible" {{#if_eq visible "on" }} checked {{/if_eq}} id="exampleCheck2">
-                                <label class="form-check-label" for="exampleCheck2">Visible</label>
+                            <div class="form-label-group">
+                                <input id="lng" type="text" name="lng" value="{{lng}}" placeholder="Longitud" class="form-control">
+                                <label for="lng">Longitud</label>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-success btn-block mt-2" type="submit">Agregar</button>
-                </form>
+                    <button class="btn btn-outline-success bg-white btn-block mt-2" type="submit">Agregar</button>
             </div>
         </div>
     </div>
     <div class="col-md-8 mt-2">
-        <div class="card h-100">
+        <div class="card">
             <div class="card-body">
-                
+                <div class="form-group">
+                    <input type="text" name="topad" value="{{topad}}" placeholder="Top ad" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="poster" value="{{poster}}" placeholder="Poster image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="preroll" value="{{preroll}}" placeholder="Preroll video" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="sponsor" value="{{sponsor}}" placeholder="Sponsor image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ad1" value="{{ad1}}" placeholder="ad1 image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ad2" value="{{ad2}}" placeholder="ad2 image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ad3" value="{{ad3}}" placeholder="ad3 image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ad4" value="{{ad4}}" placeholder="ad4 image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ad5" value="{{ad5}}" placeholder="ad5 image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ad6" value="{{ad6}}" placeholder="ad6 image" class="form-control">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+</div>
+<script>
+function AvoidSpace(event) {
+    var k = event ? event.which : window.event.keyCode;
+    if (k == 32) return false;
+}
+</script>

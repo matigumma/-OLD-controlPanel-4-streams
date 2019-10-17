@@ -3,11 +3,25 @@ const { Schema } = mongoose;
 
 const CamSchema = new Schema({
     name: { type: String, required: true},
+    slug: { type: String, required: true},
+    title: { type: String, required: true},
     source: { type: String, required: true},
-    enable: { type: String, required: true},
-    visible: { type: String, required: true},
-    connected: { type: Object, required: false},//status de la camara //ffprobe data //ping //etc
+    ffmpeg: { type: String },
+    enable: { type: String },
+    visible: { type: String },
+    lat: { type: String },
+    lng: { type: String },
+    sponsor: { type: String },
+    poster: { type: String },
+    preroll: { type: String },
+    topad: { type: String },
+    ad1: { type: String },
+    ad2: { type: String },
+    ad3: { type: String },
+    ad4: { type: String },
+    ad5: { type: String },
+    ad6: { type: String },
     date: { type: Date, default: Date.now }
 })
 
-module.exports = mongoose.model('Cam', CamSchema, 'cameras');
+module.exports = mongoose.model('Cam', CamSchema);

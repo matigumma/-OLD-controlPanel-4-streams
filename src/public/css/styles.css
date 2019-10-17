@@ -1,0 +1,117 @@
+
+        .offcanvas-collapse{
+            position: absolute;
+            visibility: hidden;
+        }
+        @media (max-width: 991.98px) {
+            button.navbar-toggler {
+                border: none;
+                padding: 0px;
+            }
+            a.navbar-brand img{
+                width: 150px;
+                height: auto;
+                margin-left: -60px;
+            }
+            .offcanvas-collapse {
+                position: fixed;
+                top: 56px; /* Height of navbar */
+                bottom: 0;
+                left: 100%;
+                width: 100%;
+                padding-right: 1rem;
+                padding-left: 1rem;
+                overflow-y: auto;
+                visibility: hidden;
+                background-color: #343a40;
+                transition: visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+                transition: transform .3s ease-in-out, visibility .3s ease-in-out;
+                transition: transform .3s ease-in-out, visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+            }
+            .offcanvas-collapse.open {
+                visibility: visible;
+                -webkit-transform: translateX(-100%);
+                transform: translateX(-100%);
+                z-index: 2;
+            }
+        }
+        .form-label-group {
+        position: relative;
+        margin-bottom: 1rem;
+        }
+
+        .form-label-group > input,
+        .form-label-group > label {
+        height: 3.125rem;
+        padding: .75rem;
+        }
+
+        .form-label-group > label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        margin-bottom: 0; /* Override default `<label>` margin */
+        line-height: 1.5;
+        color: #495057;
+        pointer-events: none;
+        cursor: text; /* Match the input under the label */
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        transition: all .1s ease-in-out;
+        }
+
+        .form-label-group input::-webkit-input-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input:-ms-input-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input::-ms-input-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input::-moz-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input::placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input:not(:placeholder-shown) {
+        padding-top: 1.25rem;
+        padding-bottom: .25rem;
+        }
+
+        .form-label-group input:not(:placeholder-shown) ~ label {
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+        font-size: 12px;
+        color: #777;
+        }
+
+        /* Fallback for Edge
+        -------------------------------------------------- */
+        @supports (-ms-ime-align: auto) {
+        .form-label-group > label {
+            display: none;
+        }
+        .form-label-group input::-ms-input-placeholder {
+            color: #777;
+        }
+        }
+
+        /* Fallback for IE
+        -------------------------------------------------- */
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        .form-label-group > label {
+            display: none;
+        }
+        .form-label-group input:-ms-input-placeholder {
+            color: #777;
+        }
+        }
