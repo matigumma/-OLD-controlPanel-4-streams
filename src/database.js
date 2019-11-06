@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb+srv://mongo_freewaves:UsjQDN3WT7dpxSCZ@cluster0fw-alobx.mongodb.net/test?retryWrites=true&w=majority',{
+mongoose.connect(process.env.DBURI ||'mongodb+srv://mongo_freewaves:UsjQDN3WT7dpxSCZ@cluster0fw-alobx.mongodb.net/test?retryWrites=true&w=majority',{
     autoReconnect: true,
     useCreateIndex: true,
     useNewUrlParser: true,

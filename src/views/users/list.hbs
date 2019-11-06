@@ -1,9 +1,10 @@
-<button class="btn btn-secondary m-2" onclick="location.assign('/users/add');">Agregar</button>
+<button class="btn btn-secondary m-2" onclick="location.assign('/users/signup');">Agregar</button>
 {{#if listado}}
 <div class="col-md-12">
 <table class="table table-md table-hover">
     <thead>
         <tr>
+            <th scope="col">action</th>
             <th scope="col">Name</th>
             <th scope="col">email</th>
             <th scope="col">created</th>
@@ -11,8 +12,12 @@
     </thead>
     <tbody>
         {{#each listado}}
-        <tr onclick="location.assign('/camaras/edit/{{_id}}');">
-            <td><i class="fas fa-edit"></i> {{name}}</td>
+        <tr>
+            <td><i class="fas fa-edit" onclick="location.assign('/users/edit/{{_id}}');"></i>
+                <i class="fas fa-trash" onclick="if(confirm('Seguro que queres borrar el usuario {{name}}?')) {location.assign('/users/delete/{{_id}}')}"></i>
+                
+                </td>
+            <td>{{name}}</td>
             <td>{{email}}</td>
             <td>{{date}}</td>
         </tr>

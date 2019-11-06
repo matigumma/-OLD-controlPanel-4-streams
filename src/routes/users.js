@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const User = require('../models/User');
 const passport = require('passport');
+const { isAuthenticated } = require('../helpers/auth');
 
-router.get('/users/list', async (req, res) => {
+router.get('/users/list', isAuthenticated, async (req, res) => {
     const listado = await User.find();
-    console.log(listado);
+    //console.log(listado);
     res.render('users/list', {listado,helpers: {// if_eq del checkbox
         if_eq: function (a, b, opts) {
             if (a == b)
@@ -13,7 +14,37 @@ router.get('/users/list', async (req, res) => {
                 return opts.inverse(this);
         }
     }});
+});
+
+router.get('/users/edit/:id', isAuthenticated, async (req, res) => {
+    const thisuser = await User.findById(req.params.id);
+    //console.log(thisuser);
+    res.render('users/user', {
+        thisuser,
+        helpers: {// if_eq del checkbox
+        if_eq: function (a, b, opts) {
+            if (a == b)
+                return opts.fn(this);
+            else
+                return opts.inverse(this);
+        }
+    }});
+});
+//actualizar y borrar usuario:
+router.put('/users/edit/:id', isAuthenticated, async (req, res) =>{
+    const { name, email } = req.body;
+    await User.findByIdAndUpdate(req.params.id, { name, email }, function (err) { req.flash('msg_error', 'Error saving user changes to database'); res.redirect('/users/list'); });
+    req.flash('msg_exito', 'Usuario modificado!');
+    res.redirect('/users/list');
 })
+
+router.get('/users/delete/:id', isAuthenticated, async (req, res) =>{
+    await User.findByIdAndDelete(req.params.id);
+    req.flash('msg_info', 'Usuario borrado!');
+    res.redirect('/users/list');
+})
+//---
+
 
 router.get('/users/signin', async (req, res) => {
     //await User.deleteOne({"email": "matias@gmail.com"});

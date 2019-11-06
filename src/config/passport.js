@@ -8,7 +8,7 @@ passport.use(new passport_local({
 }, async (email, password, done) => {
     const user = await User.findOne({email: email});
     if(!user){
-        return done(null, false, {message: 'User not found'});
+        return done(null, false, {message: 'User no encontrado'});
     }else{
         const match = await user.matchPassword(password);
         if(match){

@@ -1,0 +1,59 @@
+    <div class="col-md-4 mt-2">
+        <div class="card bg-primary text-white">
+            <div class="card-header">
+                <h5>Editar Usuario</h5>
+            </div>
+            <div class="card-body">
+<form action="/users/edit/{{thisuser._id}}?_method=PUT" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+{{!--                     <div class="form-row mb-3">
+                        <div class="col ">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="exampleCheck1">
+                                <i class="fas fa-check mx-2"></i>
+                                <input type="checkbox" class="form-check-input" name="enable" {{#if_eq thisuser.enable "on" }} checked {{/if_eq}}
+                                    id="exampleCheck1">
+                                    Enable??</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="exampleCheck2">
+                                <i class="fas fa-eye mx-2"></i>
+                                <input type="checkbox" class="form-check-input" name="visible" {{#if_eq thisuser.visible "on" }} checked {{/if_eq}}
+                                    id="exampleCheck2">
+                                    Visible?</label>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="form-label-group">
+                        <input id="name" type="text" name="name" value="{{thisuser.name}}" placeholder="Nombre del usuario" class="form-control" required>
+                        <label for="name">Nombre</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="email" type="text" name="email" value="{{thisuser.email}}" placeholder="Email del usuario" class="form-control"  required>
+                        <label for="slug">Email</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="date" type="text" name="date" value="{{thisuser.date}}" placeholder="Fecha de creacion" class="form-control" disabled>
+                        <label for="title">Fecha de creacion</label>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-success bg-white btn-block mt-2" type="submit">Editar</button>
+</form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mt-2">
+        <div class="card">
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+</div>

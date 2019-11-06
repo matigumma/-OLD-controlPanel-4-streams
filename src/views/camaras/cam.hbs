@@ -1,4 +1,199 @@
-<div class="col-md-6 m-2 mx-auto">
+    <div class="col-md-4 mt-2">
+        <div class="card bg-primary text-white">
+            <div class="card-header">
+                <h5>Editar camara</h5>
+            </div>
+            <div class="card-body">
+                {{#if_eq thiscam.enable "on" }}
+                <div class="form-row mb-2">
+                    <img src="https://srv.freewaves.live/images/{{thiscam.name}}.jpg" onerror="this.onerror=null;this.src='../../img/alert.png';this.style='width:30px';" style="border-radius: 5px;"/>
+                </div>
+                {{/if_eq}}
+<form action="/camaras/edit/{{thiscam._id}}?_method=PUT" enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="exampleCheck1">
+                                <i class="fas fa-check mx-2"></i>
+                                <input type="checkbox" class="form-check-input" name="enable" {{#if_eq thiscam.enable "on" }} checked {{/if_eq}}
+                                    id="exampleCheck1">
+                                    Enable</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="exampleCheck2">
+                                <i class="fas fa-eye mx-2"></i>
+                                <input type="checkbox" class="form-check-input" name="visible" {{#if_eq thiscam.visible "on" }} checked {{/if_eq}}
+                                    id="exampleCheck2">
+                                    Visible</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="name" type="text" name="name" value="{{thiscam.name}}" placeholder="Nombre de la camara" class="form-control" required>
+                        <label for="name">Nombre de la camara</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="slug" type="text" name="slug" value="{{thiscam.slug}}" placeholder="Url de la camara" class="form-control" onkeypress="return AvoidSpace(event)" required>
+                        <label for="slug">Url de la camara</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="title" type="text" name="title" value="{{thiscam.title}}" placeholder="Titulo de la camara" class="form-control" required>
+                        <label for="title">Titulo de la camara</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="source" type="text" name="source" value="{{source}}" placeholder="Origen" class="form-control" required>
+                        <label for="source">Origen</label>
+                    </div>      
+                    <div class="form-label-group">
+                        <input id="ffmpeg" type="text" name="ffmpeg" value="{{thiscam.ffmpeg}}" placeholder="Instruccion ffmpeg especial" class="form-control">
+                        <label for="ffmpeg">Instruccion ffmpeg especial</label>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-label-group">
+                                <input id="lat" type="text" name="lat" value="{{thiscam.lat}}" placeholder="Latitud" class="form-control">
+                                <label for="lat">Latitud</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-label-group">
+                                <input id="lng" type="text" name="lng" value="{{thiscam.lng}}" placeholder="Longitud" class="form-control">
+                                <label for="lng">Longitud</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-success bg-white btn-block mt-2" type="submit">Editar</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mt-2">
+        <div class="card" style="background-color:#f3f3f3">
+            <div class="card-body">
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="file" name="poster" class="custom-file-input" id="poster" lang="es">
+                                <label class="custom-file-label" for="poster">Imagen del Poster</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.poster }}<img style="border-radius: 5px;" src="/content/{{thiscam.poster}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="preroll" class="form-control">
+                                <label class="custom-file-label" for="preroll">Preroll video</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.preroll }}<video style="border-radius: 5px;" controls width="300px"><source src="/content/{{thiscam.preroll}}" type="video/mp4"></source></video>{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="sponsor" class="form-control">
+                                <label class="custom-file-label" for="sponsor">Sponsor image</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.sponsor }}<img style="border-radius: 5px;" src="/content/{{thiscam.sponsor}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="ad1" class="form-control">
+                                <label class="custom-file-label" for="ad1">Anuncio #1</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.ad1 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad1}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="ad2" class="form-control">
+                                <label class="custom-file-label" for="ad2">Anuncio #2</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.ad2 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad2}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="ad3" class="form-control">
+                                <label class="custom-file-label" for="ad3">Anuncio #3</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.ad3 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad3}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="ad4" class="form-control">
+                                <label class="custom-file-label" for="ad4">Anuncio #4</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.ad4 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad4}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="ad5" class="form-control">
+                                <label class="custom-file-label" for="ad5">Anuncio #5</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.ad5 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad5}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="text" name="ad6" class="form-control">
+                                <label class="custom-file-label" for="ad6">Anuncio #6</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.ad6 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad6}}" width="300px">{{/if}}
+                        </div>
+                </div>
+
+                
+</form>
+            </div>
+                <div class="card-footer">
+        <form action="/camaras/delete/{{thiscam._id}}?_method=DELETE" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger btn-block" onclick="if(!confirm('Seguro queres Borrarla?')){return false}">BORRAR esta Camara</button>
+        </form>
+    </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function AvoidSpace(event) {
+    var k = event ? event.which : window.event.keyCode;
+    if (k == 32) return false;
+}
+</script>
+
+{{!-- <div class="col-md-6 m-2 mx-auto">
 <div class="card bg-primary text-white">
     <div class="card-header">
         <h5>Editar camara</h5>
@@ -43,4 +238,4 @@
         </form>
     </div>
 </div>
-</div>
+</div> --}}
