@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DBURI ||'mongodb+srv://mongo_freewaves:UsjQDN3WT7dpxSCZ@cluster0fw-alobx.mongodb.net/test?retryWrites=true&w=majority',{
-    autoReconnect: true,
+//mongoose.connect(process.env.DBURI ||'mongodb+srv://mongo_freewaves:UsjQDN3WT7dpxSCZ@cluster0fw-alobx.mongodb.net/test?retryWrites=true&w=majority',{
+mongoose.connect('mongodb://mongo/controlpanel',{
+autoReconnect: true,
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
