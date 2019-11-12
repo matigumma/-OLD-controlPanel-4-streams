@@ -44,7 +44,7 @@
                         <label for="title">Titulo de la camara</label>
                     </div>
                     <div class="form-label-group">
-                        <input id="source" type="text" name="source" value="{{source}}" placeholder="Origen" class="form-control" required>
+                        <input id="source" type="text" name="source" value="{{thiscam.source}}" placeholder="Origen" class="form-control" required>
                         <label for="source">Origen</label>
                     </div>      
                     <div class="form-label-group">
@@ -65,6 +65,10 @@
                                 <label for="lng">Longitud</label>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="gmapLink" type="text" name="gmapLink" value="{{thiscam.gmapLink}}" placeholder="Link de google maps" class="form-control">
+                        <label for="gmapLink">Link de google maps</label>
                     </div>
                     <button class="btn btn-outline-success bg-white btn-block mt-2" type="submit">Editar</button>
             </div>

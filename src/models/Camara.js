@@ -11,6 +11,7 @@ const CamSchema = new Schema({
     visible: { type: String },
     lat: { type: String },
     lng: { type: String },
+    gmapLink: { type: String },
     sponsor: { type: String },
     poster: { type: String },
     preroll: { type: String },
