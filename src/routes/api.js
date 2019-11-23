@@ -5,8 +5,12 @@ const Stat = require("../models/Status");
 
 router.get('/api/cameras-list', async (req, res) =>{
     try {
-        const list = await Cam.find().sort({ name: "asc" });
-        if(list.length>0) {res.send(list)} else {res.status(204).send('Empty list')};
+        const list = await Cam.find().select('name slug title enable visible lat lng gmapLink banner').sort({ name: "asc" });
+        if(list.length>0) {
+            res.status(200).send(list);
+        } else {
+            res.status(204).send('Empty list');
+        }
     } catch (e) {
         res.status(404).send('Error handling db');
     }

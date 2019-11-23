@@ -4,10 +4,8 @@ require('dotenv').config();
 const dbURI = 'mongodb://'
               +process.env.MONGO_INITDB_ROOT_USERNAME+':'
               +process.env.MONGO_INITDB_ROOT_PASSWORD+'@'
-              +process.env.DB_MONGO_URI+'/'
+              +process.env.DB_MONGO_URI+':27017/'
               +process.env.DB_NAME;
-
-console.log(dbURI);
 
 setTimeout(function(){ 
   mongoose.connect(dbURI, {
@@ -17,7 +15,7 @@ setTimeout(function(){
     useUnifiedTopology: true,
     useFindAndModify: false
   }).catch(err => console.log('hubo un error al conectar: ', err));
-}, 15000);
+}, 60000);
 
 var db = mongoose.connection;
 

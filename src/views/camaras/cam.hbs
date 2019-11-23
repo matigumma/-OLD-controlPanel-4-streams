@@ -80,6 +80,17 @@
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
+                                <input type="file" name="banner" class="custom-file-input" id="banner" lang="es">
+                                <label class="custom-file-label" for="banner">Imagen del Banner</label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thiscam.banner }}<img style="border-radius: 5px;" src="/content/{{thiscam.banner}}" width="300px">{{/if}}
+                        </div>
+                </div>
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
                                 <input type="file" name="poster" class="custom-file-input" id="poster" lang="es">
                                 <label class="custom-file-label" for="poster">Imagen del Poster</label>
                             </div>

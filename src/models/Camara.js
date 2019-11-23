@@ -13,6 +13,7 @@ const CamSchema = new Schema({
     lng: { type: String },
     gmapLink: { type: String },
     sponsor: { type: String },
+    banner: { type: String },
     poster: { type: String },
     preroll: { type: String },
     topad: { type: String },

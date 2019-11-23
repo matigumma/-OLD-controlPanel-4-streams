@@ -25,6 +25,7 @@ const multerManager = multer({
         cb(`Error: formato de archivo no soportado, debe ser jpeg, jpg, png o gif, file: ${file.originalname}`,false);
     }
 }).fields([ 
+    {  name: 'banner'}, 
     {  name: 'poster'}, 
     {  name: 'preroll'},
     {  name: 'sponsor'},
@@ -87,8 +88,9 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
                 if(!enable){enable="off"};
                 if(!visible){visible="off"};
 
-                let poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6;
+                let banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6;
 
+                if(req.files.banner){ banner = req.files.banner[0].filename;}
                 if(req.files.poster){ poster = req.files.poster[0].filename;}
                 if(req.files.preroll){ preroll = req.files.preroll[0].filename;}
                 if(req.files.sponsor){ sponsor = req.files.sponsor[0].filename;}
@@ -101,7 +103,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
             //console.log(req.files);
                 const newCam = new Cam({ 
                     name, slug, title, source, ffmpeg, enable, visible, lat, lng, gmapLink, 
-                    poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6 
+                    banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6 
                 });
 
                 await newCam.save().catch(err => {
@@ -125,17 +127,17 @@ router.get('/camaras/edit/:id', isAuthenticated, async (req, res) => {
 });
 
 //edit cam
-router.put('/camaras/edit/:id', isAuthenticated, async (req, res) =>{
+router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res) =>{
     const { name, slug, title, source, ffmpeg, lat, lng, gmapLink } = req.body;
     let { enable, visible } = req.body;
     const errors = [];
-    console.log("enable: ",enable);
+    //console.log("enable: ",enable);
     
     if(!name) errors.push({text: 'Please Insert name'});
     if(!slug) errors.push({text: 'Please Insert url'});
     if(!title) errors.push({text: 'Please Insert title'});
     if(!source) errors.push({text: 'Please Insert source'});
-    if((!lat && !lng) || !gmapLink) errors.push({text: 'Please Insert lattitude and longitude, or map link '});
+    //if((!lat && !lng) || !gmapLink) errors.push({text: 'Please Insert lattitude and longitude, or map link '});
 
     
     if(errors.length > 0){
@@ -145,24 +147,47 @@ router.put('/camaras/edit/:id', isAuthenticated, async (req, res) =>{
             helpers: ifeqHelper
         });
         return;
-    };
-    //no spaces in the name
-    let nameN = name.replace(/\s/g, "");
-    let slugN = slug.replace(/\s/g, "-");
-    
-    if (!enable) { enable = "off" };
-    if (!visible) { visible = "off" };
-    await Cam.findByIdAndUpdate(req.params.id, { nameN, slugN, title, source, ffmpeg, enable, visible, lat, lng, gmapLink}).catch(err=>{
-        req.flash('msg_error', 'No se pudo actualizar!');
-        res.render('camaras/add-cam',{
-            errors,
-            name, slug, title, source, ffmpeg, enable, visible, lat, lng, gmapLink,
-            helpers: ifeqHelper
+    }else{
+
+        //no spaces in the name
+        let nameN = name.replace(/\s/g, "");
+        let slugN = slug.replace(/\s/g, "-");
+        
+        if (!enable) { enable = "off" };
+        if (!visible) { visible = "off" };
+
+        let banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6;
+
+        if(req.files.banner){ banner = req.files.banner[0].filename;}
+        if(req.files.poster){ poster = req.files.poster[0].filename;}
+        if(req.files.preroll){ preroll = req.files.preroll[0].filename;}
+        if(req.files.sponsor){ sponsor = req.files.sponsor[0].filename;}
+        if(req.files.ad1){ ad1 = req.files.ad1[0].filename;}
+        if(req.files.ad2){ ad2 = req.files.ad2[0].filename;}
+        if(req.files.ad3){ ad3 = req.files.ad3[0].filename;}
+        if(req.files.ad4){ ad4 = req.files.ad4[0].filename;}
+        if(req.files.ad5){ ad5 = req.files.ad5[0].filename;}
+        if(req.files.ad6){ ad6 = req.files.ad6[0].filename;}
+    //console.log(req.files);
+        const newEditedCam = new Cam({ 
+            nameN, slugN, title, source, ffmpeg, enable, visible, lat, lng, gmapLink, 
+            banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6 
         });
-        return;
-    });
-    req.flash('msg_exito', 'Camara modificada!');
-    res.redirect('/camaras');
+
+        //await Cam.findByIdAndUpdate(req.params.id, { nameN, slugN, title, source, ffmpeg, enable, visible, lat, lng, gmapLink}).catch(err=>{
+        await Cam.findByIdAndUpdate(req.params.id, {nameN, slugN, title, source, ffmpeg, enable, visible, lat, lng, gmapLink, 
+            banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6 }).catch(err=>{
+            req.flash('msg_error', 'No se pudo actualizar!');
+            res.render('camaras/add-cam',{
+                errors,
+                name, slug, title, source, ffmpeg, enable, visible, lat, lng, gmapLink,
+                helpers: ifeqHelper
+            });
+            return;
+        });
+        req.flash('msg_exito', 'Camara modificada!');
+        res.redirect('/camaras');
+    }
 });
 
 //delete cam

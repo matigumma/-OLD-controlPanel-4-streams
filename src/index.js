@@ -56,6 +56,7 @@ app.use(require('./routes/api'));
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
 //server listen..
+//app.listen(80, () => { 
 app.listen(app.get('port'), () => { 
     console.log('server on port', app.get('port'));
 });

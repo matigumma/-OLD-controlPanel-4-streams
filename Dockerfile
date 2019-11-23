@@ -3,7 +3,7 @@ FROM node:9-alpine
 WORKDIR /usr/src/app
 
 #install dependencies
-COPY package.json .
+COPY package*.json .
 
 RUN npm install --quiet && \
     npm cache clean --force

@@ -15,7 +15,9 @@ const ifeqHelper = {
 router.get('/users/list', isAuthenticated, async (req, res) => {
     const listado = await User.find();
     //console.log(listado);
-    res.render('users/list', {listado,helpers: ifeqHelper });
+    res.render('users/list', {
+        listado,
+        helpers: ifeqHelper });
 });
 
 //show edit user by id
@@ -30,10 +32,12 @@ router.get('/users/edit/:id', isAuthenticated, async (req, res) => {
 //edit user post
 router.post('/users/edit/:id', isAuthenticated, async (req, res) =>{
     const { name, email } = req.body;
-    await User.findByIdAndUpdate(req.params.id, { name, email }).catch(err => {
+    await User.findByIdAndUpdate(req.params.id, { name, email })
+    .catch(err => {
         req.flash('msg_error', 'Error saving user changes to database'); 
         res.redirect('/users/list'); 
-    }).then((e)=>{
+    })
+    .then((e)=>{
         req.flash('msg_exito', 'Usuario modificado!');
         res.redirect('/users/list');
     });
@@ -51,19 +55,23 @@ router.get('/users/signin', async (req, res) => {
     //await User.deleteOne({"email": "matias@gmail.com"});
     //const listUsers = await User.find();
     //console.log(listUsers);
-    res.render('users/signin', {helpers: ifeqHelper });
+    res.render('users/signin', {
+        helpers: ifeqHelper });
 });
 
 //try to login
-router.post('/users/signin', passport.authenticate('local',{
-    successRedirect: '/camaras',
-    failureRedirect: '/users/signin',
-    failureFlash: true
-}));
+router.post('/users/signin', 
+    passport.authenticate('local',{
+        successRedirect: '/camaras',
+        failureRedirect: '/users/signin',
+        failureFlash: true
+    })
+);
 
 //show register form
 router.get('/users/signup', (req, res) => {
-    res.render('users/signup', {helpers: ifeqHelper });
+    res.render('users/signup', {
+        helpers: ifeqHelper });
 });
 
 //register
