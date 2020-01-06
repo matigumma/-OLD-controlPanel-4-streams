@@ -3,11 +3,11 @@ services:
   controlpanel:
     container_name: "controlpanel"
     build: 
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
       context: ./
     command: npm run dev
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - ./src:/usr/src/app/src
       - /usr/src/app/node_modules
