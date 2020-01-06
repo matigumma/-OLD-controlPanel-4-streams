@@ -6,7 +6,7 @@
             <div class="card-body">
                 {{#if_eq thiscam.enable "on" }}
                 <div class="form-row mb-2">
-                    <img src="https://srv.freewaves.live/images/{{thiscam.name}}.jpg" onerror="this.onerror=null;this.src='../../img/alert.png';this.style='width:30px';" style="border-radius: 5px;"/>
+                    <img src="https://srv.freewaves.live/images/{{thiscam.name}}.jpg" onerror="this.onerror=null;this.src='../../img/alert.png';this.style='width:30px';" style="border-radius: 5px;width: -webkit-fill-available;"/>
                 </div>
                 {{/if_eq}}
 <form action="/camaras/edit/{{thiscam._id}}?_method=PUT" enctype="multipart/form-data" method="POST">
@@ -67,6 +67,14 @@
                         </div>
                     </div>
                     <div class="form-label-group">
+                        <input id="ciudad" type="text" name="ciudad" value="{{thiscam.ciudad}}" placeholder="Nombre de la ciudad" class="form-control">
+                        <label for="ciudad">ciudad</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="pais" type="text" name="pais" value="{{thiscam.pais}}" placeholder="pais" class="form-control">
+                        <label for="pais">pais</label>
+                    </div>                    
+                    <div class="form-label-group">
                         <input id="gmapLink" type="text" name="gmapLink" value="{{thiscam.gmapLink}}" placeholder="Link de google maps" class="form-control">
                         <label for="gmapLink">Link de google maps</label>
                     </div>
@@ -91,100 +99,118 @@
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="file" name="poster" class="custom-file-input" id="poster" lang="es">
+                                <input type="text" name="posterName" value="{{thiscam.poster.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="posterLink" value="{{thiscam.poster.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="posterFile" class="custom-file-input" id="poster" lang="es">
                                 <label class="custom-file-label" for="poster">Imagen del Poster</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.poster }}<img style="border-radius: 5px;" src="/content/{{thiscam.poster}}" width="300px">{{/if}}
+                            {{#if thiscam.poster.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.poster.file}}" width="300px">{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="preroll" class="form-control">
+                                <input type="text" name="prerollName" value="{{thiscam.preroll.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="prerollLink" value="{{thiscam.preroll.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="prerollFile" class="custom-file-input" id="preroll">
                                 <label class="custom-file-label" for="preroll">Preroll video</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.preroll }}<video style="border-radius: 5px;" controls width="300px"><source src="/content/{{thiscam.preroll}}" type="video/mp4"></source></video>{{/if}}
+                            {{#if thiscam.preroll.file }}<video style="border-radius: 5px;" controls width="300px"><source src="/content/{{thiscam.preroll.file}}" type="video/mp4"></source></video>{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="sponsor" class="form-control">
+                                <input type="text" name="sponsorName" value="{{thiscam.sponsor.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="sponsorLink" value="{{thiscam.sponsor.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="sponsorFile" class="custom-file-input" id="sponsor">
                                 <label class="custom-file-label" for="sponsor">Sponsor image</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.sponsor }}<img style="border-radius: 5px;" src="/content/{{thiscam.sponsor}}" width="300px">{{/if}}
+                            {{#if thiscam.sponsor.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.sponsor.file}}" width="300px">{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="ad1" class="form-control">
+                                <input type="text" name="ad1Name" value="{{thiscam.ad1.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="ad1Link" value="{{thiscam.ad1.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="ad1File" class="custom-file-input" id="ad1">
                                 <label class="custom-file-label" for="ad1">Anuncio #1</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.ad1 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad1}}" width="300px">{{/if}}
+                            {{#if thiscam.ad1.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad1.file}}" width="300px">{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="ad2" class="form-control">
+                                <input type="text" name="ad2Name" value="{{thiscam.ad2.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="ad2Link" value="{{thiscam.ad2.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="ad2File" class="custom-file-input" id="ad2">
                                 <label class="custom-file-label" for="ad2">Anuncio #2</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.ad2 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad2}}" width="300px">{{/if}}
+                            {{#if thiscam.ad2.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad2.file}}" width="300px">{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="ad3" class="form-control">
+                                <input type="text" name="ad3Name" value="{{thiscam.ad3.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="ad3Link" value="{{thiscam.ad3.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="ad3File" class="custom-file-input" id="ad3">
                                 <label class="custom-file-label" for="ad3">Anuncio #3</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.ad3 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad3}}" width="300px">{{/if}}
+                            {{#if thiscam.ad3.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad3.file}}" width="300px">{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="ad4" class="form-control">
+                                <input type="text" name="ad4Name" value="{{thiscam.ad4.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="ad4Link" value="{{thiscam.ad4.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="ad4File" class="custom-file-input" id="ad4">
                                 <label class="custom-file-label" for="ad4">Anuncio #4</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.ad4 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad4}}" width="300px">{{/if}}
+                            {{#if thiscam.ad4.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad4.file}}" width="300px">{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="ad5" class="form-control">
+                                <input type="text" name="ad5Name" value="{{thiscam.ad5.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="ad5Link" value="{{thiscam.ad5.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="ad5File" class="custom-file-input" id="ad5">
                                 <label class="custom-file-label" for="ad5">Anuncio #5</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.ad5 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad5}}" width="300px">{{/if}}
+                            {{#if thiscam.ad5.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad5.file}}" width="300px">{{/if}}
                         </div>
                 </div>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
-                                <input type="text" name="ad6" class="form-control">
+                                <input type="text" name="ad6Name" value="{{thiscam.ad6.name}}" placeholder="Nombre" class="form-control">
+                                <input type="text" name="ad6Link" value="{{thiscam.ad6.link}}" placeholder="Link del anunciante" class="form-control">
+                                <input type="file" name="ad6File" class="custom-file-input" id="ad6">
                                 <label class="custom-file-label" for="ad6">Anuncio #6</label>
                             </div>
                         </div>
                         <div class="col-md text-center">
-                            {{#if thiscam.ad6 }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad6}}" width="300px">{{/if}}
+                            {{#if thiscam.ad6.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad6.file}}" width="300px">{{/if}}
                         </div>
                 </div>
 
@@ -202,10 +228,20 @@
 </div>
 
 <script>
-function AvoidSpace(event) {
-    var k = event ? event.which : window.event.keyCode;
-    if (k == 32) return false;
-}
+    /*function removeAd(idCam, campo){
+        jQuery.ajax({
+            type: 'PUT',
+            url: `/camaras/quitar/anuncio/${idCam}`,
+            data: campo,
+            success: function () {
+                alert('campo actualizado')
+            }
+        });
+    }*/
+    function AvoidSpace(event) {
+        var k = event ? event.which : window.event.keyCode;
+        if (k == 32) return false;
+    }
 </script>
 
 {{!-- <div class="col-md-6 m-2 mx-auto">

@@ -1,21 +1,15 @@
 const mongoose = require("mongoose");
-require('dotenv').config();
 
-const dbURI = 'mongodb://'
-              +process.env.MONGO_INITDB_ROOT_USERNAME+':'
-              +process.env.MONGO_INITDB_ROOT_PASSWORD+'@'
-              +process.env.DB_MONGO_URI+':27017/'
-              +process.env.DB_NAME;
-
-setTimeout(function(){ 
-  mongoose.connect(dbURI, {
-    autoReconnect: true,
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-  }).catch(err => console.log('hubo un error al conectar: ', err));
-}, 60000);
+async function connectDb({db_username, db_pass, db_uri, db_port, db_name}){
+  const URI = `mongodb://${db_username}:${db_pass}@${db_uri}:${db_port}/${db_name}`
+  await mongoose.connect(URI, {
+      autoReconnect: true,
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    })
+}
 
 var db = mongoose.connection;
 
@@ -37,13 +31,6 @@ db.on('reconnected', function () {
 });
 db.on('disconnected', function() {
   console.log('MongoDB disconnected!');
-  setTimeout(function(){ 
-    mongoose.connect(dbURI, {
-      autoReconnect: true,
-      useCreateIndex: true,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false
-    }).catch(err => console.log('hubo un error al conectar: ', err));
-  }, 15000);
 });
+ 
+module.exports = connectDb

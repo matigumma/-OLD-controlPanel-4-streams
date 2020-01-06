@@ -14,11 +14,6 @@ router.get('/', (req, res) => {
     {helpers: ifeqHelper});
 });
 
-router.get('/anuncios', (req, res) => {
-    res.render('anuncios', 
-    {helpers: ifeqHelper});
-});
-
 router.get('/settings', (req, res) => {
     res.render('settings', 
     {helpers: ifeqHelper});

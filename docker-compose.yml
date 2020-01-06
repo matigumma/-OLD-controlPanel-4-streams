@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  controlpanel:
+    container_name: "controlpanel"
+    build: 
+      dockerfile: Dockerfile-dev
+      context: ./
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/usr/src/app/src
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongocp
+
+  mongocp:
+    image: "mongo"
+    container_name: "mongocp"
+    command: mongod --port 27018
+    ports:
+      - "27018:27018"
+    volumes:
+      - ./mongo-volume-dev:/data/db

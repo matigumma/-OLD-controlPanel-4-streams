@@ -61,6 +61,14 @@
                         </div>
                     </div>
                     <div class="form-label-group">
+                        <input id="ciudad" type="text" name="ciudad" value="{{ciudad}}" placeholder="Nombre de la ciudad" class="form-control">
+                        <label for="ciudad">ciudad</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="pais" type="text" name="pais" value="{{pais}}" placeholder="pais" class="form-control">
+                        <label for="pais">pais</label>
+                    </div>
+                    <div class="form-label-group">
                         <input id="gmapLink" type="text" name="gmapLink" value="{{gmapLink}}" placeholder="Link de google maps" class="form-control">
                         <label for="gmapLink">Link de google maps</label>
                     </div>
@@ -77,39 +85,57 @@
                 </div>
                 <div class="form-group">
                     <label for="poster">Imagen del Poster</label>
-                    <input type="file" name="poster" value="{{poster}}" placeholder="Poster image" class="form-control">
+                    <input type="text" name="posterName" value="{{poster.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="posterLink" value="{{poster.link}}" placeholder="Link del anunciante" class="form-control">
+                    <input type="file" name="posterFile" value="{{poster.file}}" placeholder="Poster image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="preroll">Video preroll</label>
-                    <input type="file" name="preroll" value="{{preroll}}" placeholder="Preroll video" class="form-control">
+                    <input type="text" name="prerollName" value="{{preroll.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="prerollLink" value="{{preroll.link}}" placeholder="Link del anunciante" class="form-control">
+                    <input type="file" name="prerollFile" value="{{preroll.file}}" placeholder="Preroll video" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="sponsor">Sponsor</label>
-                    <input type="file" name="sponsor" value="{{sponsor}}" placeholder="Sponsor image" class="form-control">
+                    <input type="text" name="sponsorName" value="{{sponsor.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="sponsorLink" value="{{sponsor.link}}" placeholder="Link del sponsor" class="form-control">
+                    <input type="file" name="sponsorFile" value="{{sponsor.file}}" placeholder="Sponsor image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ad1">Anuncio #1</label>
-                    <input type="file" name="ad1" value="{{ad1}}" placeholder="ad1 image" class="form-control">
+                    <input type="text" name="ad1Name" value="{{ad1.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="ad1Link" value="{{ad1.link}}" placeholder="Link del banner" class="form-control">
+                    <input type="file" name="ad1File" value="{{ad1.file}}" placeholder="ad1 image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ad2">Anuncio #2</label>
-                    <input type="file" name="ad2" value="{{ad2}}" placeholder="ad2 image" class="form-control">
+                    <input type="text" name="ad2Name" value="{{ad2.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="ad2Link" value="{{ad2.link}}" placeholder="Link del banner" class="form-control">
+                    <input type="file" name="ad2File" value="{{ad2.file}}" placeholder="ad2 image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ad3">Anuncio #3</label>
-                    <input type="file" name="ad3" value="{{ad3}}" placeholder="ad3 image" class="form-control">
+                    <input type="text" name="ad3Name" value="{{ad3.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="ad3Link" value="{{ad3.link}}" placeholder="Link del banner" class="form-control">
+                    <input type="file" name="ad3File" value="{{ad3.file}}" placeholder="ad3 image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ad4">Anuncio #4</label>
-                    <input type="file" name="ad4" value="{{ad4}}" placeholder="ad4 image" class="form-control">
+                    <input type="text" name="ad4Name" value="{{ad4.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="ad4Link" value="{{ad4.link}}" placeholder="Link del banner" class="form-control">
+                    <input type="file" name="ad4File" value="{{ad4.file}}" placeholder="ad4 image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ad5">Anuncio #5</label>
-                    <input type="file" name="ad5" value="{{ad5}}" placeholder="ad5 image" class="form-control">
+                    <input type="text" name="ad5Name" value="{{ad5.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="ad5Link" value="{{ad5.link}}" placeholder="Link del banner" class="form-control">
+                    <input type="file" name="ad5File" value="{{ad5.file}}" placeholder="ad5 image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="ad6">Anuncio #6</label>
-                    <input type="file" name="ad6" value="{{ad6}}" placeholder="ad6 image" class="form-control">
+                    <input type="text" name="ad6Name" value="{{ad6.name}}" placeholder="Nombre" class="form-control">
+                    <input type="text" name="ad6Link" value="{{ad6.link}}" placeholder="Link del banner" class="form-control">
+                    <input type="file" name="ad6File" value="{{ad6.file}}" placeholder="ad6 image" class="form-control">
                     </form>
                 </div>
             </div>

@@ -5,14 +5,18 @@ const methodOverride = require("method-override");
 const expressSession = require("express-session");
 const flash = require('connect-flash');
 const passport = require('passport');
+const cors = require('cors');
+require('dotenv').config();
+const { appConfig, dbConfig } = require('./config/config');
 
 //initializations
 const app = express();
-require('./database');
+const connectDb = require('./database');
+console.log(dbConfig);
+setTimeout(()=>connectDb(dbConfig),60000);
 require('./config/passport');
-
+app.use(cors());
 //settings
-app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 
 app.engine('.hbs',hbs({
@@ -27,7 +31,7 @@ app.set('view engine', '.hbs')
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 app.use(expressSession({
-    secret: 'l1c4ntr1s2ñ1s2cr2t1',
+    secret: appConfig.secret,
     resave: true,
     saveUninitialized: true
 }));
@@ -35,14 +39,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-
 //global vars
 app.use((req, res, next) =>{
     res.locals.msg_exito = req.flash('msg_exito');
     res.locals.msg_error = req.flash('msg_error');
-    res.locals.error = req.flash('error');//passport error
+    res.locals.error = req.flash('error');
     res.locals.msg_info = req.flash('msg_info');
-    res.locals.user = req.user || null;//passport user
+    res.locals.user = req.user || null;
     next();
 });
 
@@ -55,8 +58,7 @@ app.use(require('./routes/api'));
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
-//server listen..
-//app.listen(80, () => { 
-app.listen(app.get('port'), () => { 
-    console.log('server on port', app.get('port'));
+
+app.listen(appConfig.port, () => { 
+    console.log('server on port', appConfig.port);
 });

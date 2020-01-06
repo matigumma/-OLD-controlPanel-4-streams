@@ -1,0 +1,60 @@
+    <div class="col-md-4 mt-2">
+        <div class="card bg-primary text-white">
+            <div class="card-header">
+                <h5>Editar anuncio</h5>
+            </div>
+            <div class="card-body">
+<form action="/anuncios/edit/{{thisad._id}}?_method=PUT" enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+                    
+                    <div class="form-label-group">
+                        <input id="title" type="text" name="title" value="{{thisad.title}}" placeholder="Titulo del anuncio" class="form-control" required>
+                        <label for="title">Titulo del anuncio</label>
+                    </div>
+                
+                <div class="form-row my-2" style="min-height:165px;">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <input type="file" name="image" class="custom-file-input" id="image" lang="es">
+                                <label class="custom-file-label" for="image">Imagen </label>
+                            </div>
+                        </div>
+                        <div class="col-md text-center">
+                            {{#if thisad.image }}<img style="border-radius: 5px;" src="/content/ads/{{thisad.image}}" width="300px">{{/if}}
+                        </div>
+                </div>
+
+                    <div class="form-label-group">
+                        <input id="titular" type="text" name="titular" value="{{thisad.titular}}" placeholder="Titular/dueño" class="form-control" required>
+                        <label for="titular">Titular/dueño</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="fechaInicio" type="date" name="fechaInicio" value="{{thisad.fechaInicio}}" placeholder="Fecha de inicio de la publicacion" class="form-control" required>
+                        <label for="fechaInicio">Fecha de inicio de la publicacion</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="fechaFin" type="date" name="fechaFin" value="{{thisad.fechaFin}}" placeholder="Fecha de finalizacion de la publicacion" class="form-control" required>
+                        <label for="fechaFin">Fecha de finalizacion de la publicacion</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input id="link" type="text" name="link" value="{{thisad.link}}" placeholder="Link del anuncio" class="form-control">
+                        <label for="link">Link del anuncio</label>
+                    </div>
+
+                    <button class="btn btn-outline-success bg-white btn-block mt-2" type="submit">Editar</button>
+</form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mt-2">
+        <div class="card" style="background-color:#f3f3f3">
+            <div class="card-body">
+                <form action="/anuncios/delete/{{thisad._id}}?_method=DELETE" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-block" onclick="if(!confirm('Seguro queres Borrarla?')){return false}">BORRAR esta Camara</button>
+                </form>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+</div>

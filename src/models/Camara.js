@@ -9,20 +9,23 @@ const CamSchema = new Schema({
     ffmpeg: { type: String },
     enable: { type: String },
     visible: { type: String },
+    status: { type: Boolean, default: false },
     lat: { type: String },
     lng: { type: String },
+    ciudad: { type: String },
+    pais: { type: String },
     gmapLink: { type: String },
-    sponsor: { type: String },
+    sponsor: { type: Object },//str to obj
     banner: { type: String },
-    poster: { type: String },
-    preroll: { type: String },
-    topad: { type: String },
-    ad1: { type: String },
-    ad2: { type: String },
-    ad3: { type: String },
-    ad4: { type: String },
-    ad5: { type: String },
-    ad6: { type: String },
+    poster: { type: Object },//str to obj
+    preroll: { type: Object },//str to obj
+    topad: { type: Object },//str to obj
+    ad1: { type: Object },//str to obj {name, link, file}
+    ad2: { type: Object },//str to obj
+    ad3: { type: Object },//str to obj
+    ad4: { type: Object },//str to obj
+    ad5: { type: Object },//str to obj
+    ad6: { type: Object },//str to obj
     date: { type: Date, default: Date.now }
 })
 

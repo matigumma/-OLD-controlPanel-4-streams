@@ -1,16 +1,47 @@
 const router = require("express").Router();
 
+const Ad = require("../models/Ads");
 const Cam = require("../models/Camara");
 const Stat = require("../models/Status");
 
-router.get('/api/cameras-list', async (req, res) =>{
+router.get('/api/anuncios-cameras-list', async (req, res) =>{
     try {
-        const list = await Cam.find().select('name slug title enable visible lat lng gmapLink banner').sort({ name: "asc" });
-        if(list.length>0) {
-            res.status(200).send(list);
+        const anuncios = await Ad.find();
+        if(anuncios.length>0) {
+            console.log('anuncios ok');
+            res.status(200).send(anuncios);
         } else {
+            console.log('anuncios empty');
             res.status(204).send('Empty list');
         }
+    } catch (e) {
+        res.status(404).send('Error handling db');
+    }
+});
+
+router.get('/api/cameras-list', async (req, res) =>{
+    try {
+        const list = await Cam.find().select('name slug title lat lng ciudad pais gmapLink banner poster preroll sponsor ad1 ad2 ad3 ad4 ad5 ad6 ');
+        if(list.length>0) {
+            console.log(list);
+            res.status(200).send(list);
+        } else {
+            console.log('cameras-list empty');
+            res.status(204).send('Empty list');
+        }
+    } catch (e) {
+        res.status(404).send('Error handling db');
+    }
+});
+
+
+
+//el siguiente get es para corroborar el slug de la camara
+router.get('/api/cameras/:any', async (req, res) => {
+    try {
+        console.log(req.params.any);
+        const camara = await Cam.findOne({'slug': req.params.any});
+        if (camara) { res.send(camara) } else { res.status(204).send('cam not found') };
     } catch (e) {
         res.status(404).send('Error handling db');
     }
@@ -25,6 +56,9 @@ router.get('/api/cameras/:id', async (req, res) => {
     }
 });
 
+
+
+//status para los resstreamers
 router.get('/api/status-list', async (req, res) => {
     try {
         const list = await Stat.find().sort({ name: "asc" });

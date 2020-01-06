@@ -1,0 +1,24 @@
+<div class="container">
+<div class="row">
+ <button class="btn btn-secondary btn-block my-2" onclick="location.assign('/anuncios/add');">Agregar nuevo anuncio</button>
+
+ {{#if anuncios}}
+    {{#each anuncios}}
+        <div class="card bg-light border-primary col-md-3 p-0 mb-2">
+            <div role="button"  onclick="location.assign('/anuncios/edit/{{_id}}');" class="card-header">
+                <div class="row justify-content-between">
+                    <div class="col custom-control custom-switch"> 
+                        <input type="checkbox" {{#if_eq enable "on"}}checked{{/if_eq}} class="custom-control-input"
+                        alt="{{_id}}" disabled id="{{_id}}"> 
+                        <label class="custom-control-label {{#if_eq enable 'off'}}text-white{{/if_eq}}" for="{{_id}}">{{title}}</label> 
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <img src="/content/ads/{{image}}" class="card-img m-0" alt="..." style="border-radius: 5%;">
+            </div>
+        </div>
+    {{/each}}
+ {{/if}}
+</div>
+</div>
