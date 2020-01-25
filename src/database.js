@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 async function connectDb({db_username, db_pass, db_uri, db_port, db_name}){
   const URI = `mongodb://${db_username}:${db_pass}@${db_uri}:${db_port}/${db_name}`
   await mongoose.connect(URI, {
-      autoReconnect: true,
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
