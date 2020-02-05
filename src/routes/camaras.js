@@ -178,17 +178,15 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
 //show edit cam by id
 router.get('/camaras/edit/:id', isAuthenticated, async (req, res) => {
     const thiscam = await Cam.findById(req.params.id);
-    const folderPath = '../public/content';
+/*     const folderPath = '../public/content';
     const isFile = fileName => {
         return fs.lstatSync(fileName).isFile()
-      };
-      
+    };
     const imagenes = fs.readdirSync(folderPath).map(fileName => {
         return path.join(folderPath, fileName).filter(isFile)
-      });
+    }); */
     res.render('camaras/cam', { 
         thiscam,
-        imagenes,
         helpers: ifeqHelper
     })
 });
