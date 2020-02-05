@@ -2,7 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const multer = require('multer');
 const uuid = require('uuid/v4');
-
+const fs = require('fs');
 //multer
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/content'),
@@ -68,7 +68,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
 
         //add cam
         router.post('/camaras/add', multerManager, isAuthenticated, async (req, res) => {
-            const { 
+            const {
                 name, 
                 slug, 
                 title, 
@@ -100,7 +100,6 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
             } else {
                 if(!enable){enable="off"};
                 if(!visible){visible="off"};
-
                 let banner;
                 if(req.files.banner){ banner = req.files.banner[0].filename;}
                 //console.log('req.files: ',req.files)
@@ -179,7 +178,17 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
 //show edit cam by id
 router.get('/camaras/edit/:id', isAuthenticated, async (req, res) => {
     const thiscam = await Cam.findById(req.params.id);
-    res.render('camaras/cam', { thiscam,
+    const folderPath = '../public/content';
+    const isFile = fileName => {
+        return fs.lstatSync(fileName).isFile()
+      };
+      
+    const imagenes = fs.readdirSync(folderPath).map(fileName => {
+        return path.join(folderPath, fileName).filter(isFile)
+      });
+    res.render('camaras/cam', { 
+        thiscam,
+        imagenes,
         helpers: ifeqHelper
     })
 });
@@ -262,24 +271,24 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
 
         if(req.files.banner){ 
             objectToUpdate.banner = req.files.banner[0].filename;}
-        if(req.files.poster){ 
-            objectToUpdate.poster.file = req.files.poster[0].filename;}
-        if(req.files.preroll){ 
-            objectToUpdate.preroll.file = req.files.preroll[0].filename;}
-        if(req.files.sponsor){ 
-            objectToUpdate.sponsor.file = req.files.sponsor[0].filename;}
-        if(req.files.ad1){ 
-            objectToUpdate.ad1.file = req.files.ad1[0].filename;}
-        if(req.files.ad2){ 
-            objectToUpdate.ad2.file = req.files.ad2[0].filename;}
-        if(req.files.ad3){ 
-            objectToUpdate.ad3.file = req.files.ad3[0].filename;}
-        if(req.files.ad4){ 
-            objectToUpdate.ad4.file = req.files.ad4[0].filename;}
-        if(req.files.ad5){ 
-            objectToUpdate.ad5.file = req.files.ad5[0].filename;}
-        if(req.files.ad6){ 
-            objectToUpdate.ad6.file = req.files.ad6[0].filename;}
+        if(req.files.posterFile){ 
+            objectToUpdate.poster.file = req.files.posterFile[0].filename;}
+        if(req.files.prerollFile){ 
+            objectToUpdate.preroll.file = req.files.prerollFile[0].filename;}
+        if(req.files.sponsorFile){ 
+            objectToUpdate.sponsor.file = req.files.sponsorFile[0].filename;}
+        if(req.files.ad1File){ 
+            objectToUpdate.ad1.file = req.files.ad1File[0].filename;}
+        if(req.files.ad2File){ 
+            objectToUpdate.ad2.file = req.files.ad2File[0].filename;}
+        if(req.files.ad3File){ 
+            objectToUpdate.ad3.file = req.files.ad3File[0].filename;}
+        if(req.files.ad4File){ 
+            objectToUpdate.ad4.file = req.files.ad4File[0].filename;}
+        if(req.files.ad5File){ 
+            objectToUpdate.ad5.file = req.files.ad5File[0].filename;}
+        if(req.files.ad6File){ 
+            objectToUpdate.ad6.file = req.files.ad6File[0].filename;}
 
         await Cam.findByIdAndUpdate(req.params.id, objectToUpdate).catch(err=>{
             req.flash('msg_error', 'No se pudo actualizar!');

@@ -1,7 +1,7 @@
     <div class="col-md-4 mt-2">
         <div class="card bg-primary text-white">
             <div class="card-header">
-                <h5>Editar camara</h5>
+                <h5>Editando {{thiscam.name}}</h5>
             </div>
             <div class="card-body">
                 {{#if_eq thiscam.enable "on" }}
@@ -9,8 +9,8 @@
                     <img src="https://srv.freewaves.live/images/{{thiscam.name}}.jpg" onerror="this.onerror=null;this.src='../../img/alert.png';this.style='width:30px';" style="border-radius: 5px;width: -webkit-fill-available;"/>
                 </div>
                 {{/if_eq}}
-<form action="/camaras/edit/{{thiscam._id}}?_method=PUT" enctype="multipart/form-data" method="POST">
-            <input type="hidden" name="_method" value="PUT">
+                <form action="/camaras/edit/{{thiscam._id}}?_method=PUT" enctype="multipart/form-data" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="form-row mb-3">
                         <div class="col">
                             <div class="form-check form-check-inline">
@@ -86,6 +86,15 @@
         <div class="card" style="background-color:#f3f3f3">
             <div class="card-body">
                 <div class="form-row my-2" style="min-height:165px;">
+                        {{#if imagenes}}
+                        listado de imagenes
+                            <select class="custom-select">
+                                <option selected>listado de imagenes</option>
+                                    {{#each imagenes}}
+                                        <option value={{this}}>{{this}}</option>
+                                    {{/each}}
+                            </select>
+                        {{/if}}
                         <div class="col-md">
                             <div class="form-group">
                                 <input type="file" name="banner" class="custom-file-input" id="banner" lang="es">
@@ -96,6 +105,7 @@
                             {{#if thiscam.banner }}<img style="border-radius: 5px;" src="/content/{{thiscam.banner}}" width="300px">{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -109,6 +119,7 @@
                             {{#if thiscam.poster.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.poster.file}}" width="300px">{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -122,6 +133,7 @@
                             {{#if thiscam.preroll.file }}<video style="border-radius: 5px;" controls width="300px"><source src="/content/{{thiscam.preroll.file}}" type="video/mp4"></source></video>{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -135,6 +147,7 @@
                             {{#if thiscam.sponsor.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.sponsor.file}}" width="300px">{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -148,6 +161,7 @@
                             {{#if thiscam.ad1.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad1.file}}" width="300px">{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -161,6 +175,7 @@
                             {{#if thiscam.ad2.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad2.file}}" width="300px">{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -187,6 +202,7 @@
                             {{#if thiscam.ad4.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad4.file}}" width="300px">{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -200,6 +216,7 @@
                             {{#if thiscam.ad5.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad5.file}}" width="300px">{{/if}}
                         </div>
                 </div>
+                <hr>
                 <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
@@ -213,9 +230,7 @@
                             {{#if thiscam.ad6.file }}<img style="border-radius: 5px;" src="/content/{{thiscam.ad6.file}}" width="300px">{{/if}}
                         </div>
                 </div>
-
-                
-</form>
+            </form>
             </div>
                 <div class="card-footer">
         <form action="/camaras/delete/{{thiscam._id}}?_method=DELETE" method="POST">
