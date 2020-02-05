@@ -79,7 +79,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
                 gmapLink,
                 posterName, prerollName, sponsorName, ad1Name, ad2Name, ad3Name, ad4Name, ad5Name, ad6Name,
                 posterLink, prerollLink, sponsorLink, ad1Link, ad2Link, ad3Link, ad4Link, ad5Link, ad6Link
-             } = req.body;
+            } = req.body;
             let { enable, visible } = req.body;
             const errors = [];
 

@@ -4,16 +4,16 @@
 
  {{#if camaras}}
     {{#each camaras}}
-        <div class="card {{#if_eq enable 'on'}} bg-light {{#if_eq visible 'on'}}border-primary{{/if_eq}}{{else}} bg-secondary{{/if_eq}} col-md-3 p-0 mb-2">
-            <div role="button"  onclick="location.assign('/camaras/edit/{{_id}}');" class="card-header">
+        <div class="card {{#if_eq this.enable 'on'}} bg-light {{#if_eq this.visible 'on'}}border-primary{{/if_eq}}{{else}} bg-secondary{{/if_eq}} col-md-3 p-0 mb-2">
+            <div role="button"  onclick="location.assign('/camaras/edit/{{this._id}}');" class="card-header">
                 <div class="row justify-content-between">
                     <div class="col custom-control custom-switch"> 
-                        <input type="checkbox" {{#if_eq enable "on"}}checked{{/if_eq}} class="custom-control-input" alt="{{_id}}" disabled id="{{_id}}"> 
-                        <label class="custom-control-label {{#if_eq enable 'off'}}text-white{{/if_eq}}" for="{{_id}}">{{name}}</label> 
+                        <input type="checkbox" {{#if_eq this.enable "on"}}checked{{/if_eq}} class="custom-control-input" alt="{{this._id}}" disabled id="{{this._id}}"> 
+                        <label class="custom-control-label {{#if_eq this.enable 'off'}}text-white{{/if_eq}}" for="{{this._id}}">{{this.name}}</label> 
                     </div>
                     <div class="col text-right">
-                        {{#if_eq visible 'on'}}<span class="mr-auto"><i class="fas fa-eye"></i></span>{{else}}<span class="mr-auto"><i class="fas fa-eye-slash"></i></span>{{/if_eq}}
-                        {{#if_eq enable 'on'}}<img src="https://srv.freewaves.live/images/{{name}}.jpg" onerror="this.onerror=null;this.src='img/alert.png';this.style='width:30px;height:27px';" class="card-img m-0" alt="..." style="width:30px;height:30px;border-radius: 50%;">{{/if_eq}}
+                        {{#if_eq this.visible 'on'}}<span class="mr-auto"><i class="fas fa-eye"></i></span>{{else}}<span class="mr-auto"><i class="fas fa-eye-slash"></i></span>{{/if_eq}}
+                        {{#if_eq this.enable 'on'}}<img src="https://srv.freewaves.live/images/{{this.name}}.jpg" onerror="this.onerror=null;this.src='img/alert.png';this.style='width:30px;height:27px';" class="card-img m-0" alt="..." style="width:30px;height:30px;border-radius: 50%;">{{/if_eq}}
                     </div>
                 </div>
             </div>
