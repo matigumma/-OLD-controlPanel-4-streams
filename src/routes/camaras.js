@@ -2,7 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const multer = require('multer');
 const uuid = require('uuid/v4');
-const fs = require('fs');
+//const fs = require('fs');
 //multer
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/content'),
@@ -53,6 +53,7 @@ const Cam = require("../models/Camara");//model
 //show list cams 
 router.get('/camaras', isAuthenticated, async (req, res) => {
     const camaras = await Cam.find().sort({ name: "asc" });
+    console.log('camaras: ',camaras)
     res.render('camaras/list-cams', {
         camaras, 
         helpers: ifeqHelper 
