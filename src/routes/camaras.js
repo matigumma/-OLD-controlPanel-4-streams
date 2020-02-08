@@ -282,6 +282,7 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
             objectToUpdate.ad6.file = req.files.ad6File[0].filename;}
 
         await Cam.findByIdAndUpdate(req.params.id, objectToUpdate).catch(err=>{
+            console.log('error l.285: ',err);
             req.flash('msg_error', 'No se pudo actualizar!');
             res.render('camaras/cam',{
                 errors,
