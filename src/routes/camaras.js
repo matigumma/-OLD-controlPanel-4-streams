@@ -52,11 +52,15 @@ const Cam = require("../models/Camara");//model
 
 //show list cams 
 router.get('/camaras', isAuthenticated, async (req, res) => {
-    const camaras = await Cam.find().sort({ name: "asc" });
-    res.render('camaras/list-cams', {
-        camaras, 
-        helpers: ifeqHelper 
-    })
+    try {
+        const camaras = await Cam.find().sort({ name: "asc" });
+        res.render('camaras/list-cams', {
+            camaras, 
+            helpers: ifeqHelper 
+        })
+    } catch (error) {
+        console.log(error)
+    }
 });
 
 //show add new cam
@@ -163,13 +167,22 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
                     banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6 
                 });
 
-                await newCam.save().catch(err => {
+                try {
+                    await newCam.save()
+                } catch (error) {
                     req.flash('msg_error', 'Error saving to database'); 
                     res.render('camaras/add-cam', {
                         errors, name, slug, title, source, ffmpeg, enable, visible, lat, lng, ciudad, pais, gmapLink,
                         banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6, helpers: ifeqHelper });
                     return;
-                });
+                }
+                // await newCam.save().catch(err => {
+                //     req.flash('msg_error', 'Error saving to database'); 
+                //     res.render('camaras/add-cam', {
+                //         errors, name, slug, title, source, ffmpeg, enable, visible, lat, lng, ciudad, pais, gmapLink,
+                //         banner, poster, preroll, sponsor, ad1, ad2, ad3, ad4, ad5, ad6, helpers: ifeqHelper });
+                //     return;
+                // });
 
                 req.flash('msg_exito', 'Camara agregada!');
                 res.redirect('/camaras');
@@ -178,10 +191,14 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
 
 //show edit cam by id
 router.get('/camaras/edit/:id', isAuthenticated, async (req, res) => {
-    const thiscam = await Cam.findById(req.params.id);
-    res.render('camaras/cam', { thiscam,
-        helpers: ifeqHelper
-    })
+    try {
+        const thiscam = await Cam.findById(req.params.id);
+        res.render('camaras/cam', { thiscam,
+            helpers: ifeqHelper
+        })
+    } catch (error) {
+        console.log(error)
+    }
 });
 /* router.put('/camaras/quitar/anuncio/:id', isAuthenticated, async (req, res) => {
     //req.params.id
@@ -313,9 +330,13 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
 
 //delete cam
 router.delete('/camaras/delete/:id', isAuthenticated, async (req, res) =>{
-    await Cam.findByIdAndDelete(req.params.id);
-    req.flash('msg_info', 'Camara borrada!');
-    res.redirect('/camaras');
+    try {
+        await Cam.findByIdAndDelete(req.params.id);
+        req.flash('msg_info', 'Camara borrada!');
+        res.redirect('/camaras');
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 module.exports = router;
