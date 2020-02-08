@@ -269,37 +269,76 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
             objectToUpdate.pais = pais? pais : '';
             objectToUpdate.gmapLink = gmapLink? gmapLink : '';
             
-            objectToUpdate.poster.name = posterName? posterName : '';
-            objectToUpdate.preroll.name = prerollName? prerollName : '';
-            objectToUpdate.sponsor.name = sponsorName? sponsorName : '';
+            objectToUpdate.poster = {
+                name = posterName? posterName : ''
+            }
+            objectToUpdate.preroll = {
+                name = prerollName? prerollName : ''
+            }
+            objectToUpdate.sponsor = {
+                name = sponsorName? sponsorName : ''
+            }
 
-            objectToUpdate.poster.link = posterLink? posterLink : '';
-            objectToUpdate.preroll.link = prerollLink? prerollLink : '';
-            objectToUpdate.sponsor.link = sponsorLink? sponsorLink : '';
+            objectToUpdate.poster = {
+                link = posterLink? posterLink : ''
+            }
+            objectToUpdate.preroll = {
+                link = prerollLink? prerollLink : ''
+            }
+            objectToUpdate.sponsor = {
+                link = sponsorLink? sponsorLink : ''
+            }
 
         if(req.files.banner){ 
             objectToUpdate.banner = req.files.banner[0].filename;}
         if(req.files.posterFile){ 
-            objectToUpdate.poster.file = req.files.posterFile[0].filename;}
+            objectToUpdate.poster = {
+                file: req.files.posterFile[0].filename
+            }
+        }
         if(req.files.prerollFile){ 
-            objectToUpdate.preroll.file = req.files.prerollFile[0].filename;}
+            objectToUpdate.preroll = {
+                file = req.files.prerollFile[0].filename
+            }
+        }
         if(req.files.sponsorFile){ 
-            objectToUpdate.sponsor.file = req.files.sponsorFile[0].filename;}
+            objectToUpdate.sponsor = {
+                file = req.files.sponsorFile[0].filename
+            }
+        }
         if(req.files.ad1File){ 
-            objectToUpdate.ad1.file = req.files.ad1File[0].filename;}
+            objectToUpdate.ad1 = {
+                file = req.files.ad1File[0].filename
+            }
+        }
         if(req.files.ad2File){ 
-            objectToUpdate.ad2.file = req.files.ad2File[0].filename;}
+            objectToUpdate.ad2 = {
+                file = req.files.ad2File[0].filename
+            }
+        }
         if(req.files.ad3File){ 
-            objectToUpdate.ad3.file = req.files.ad3File[0].filename;}
+            objectToUpdate.ad3 = {
+                file = req.files.ad3File[0].filename
+            }
+        }
         if(req.files.ad4File){ 
-            objectToUpdate.ad4.file = req.files.ad4File[0].filename;}
+            objectToUpdate.ad4 = {
+                file = req.files.ad4File[0].filename
+            }
+        }
         if(req.files.ad5File){ 
-            objectToUpdate.ad5.file = req.files.ad5File[0].filename;}
+            objectToUpdate.ad5 = {
+                file = req.files.ad5File[0].filename
+            }
+        }
         if(req.files.ad6File){ 
-            objectToUpdate.ad6.file = req.files.ad6File[0].filename;}
+            objectToUpdate.ad6 = {
+                file = req.files.ad6File[0].filename
+            }
+        }
 
         try {
-            await Cam.findByIdAndUpdate(req.params.id, { $set: objectToUpdate})
+            await Cam.findByIdAndUpdate(req.params.id, objectToUpdate)
         } catch (error) {
             console.log('error l.285: ',error);
             req.flash('msg_error', 'No se pudo actualizar!');
