@@ -270,23 +270,23 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
             objectToUpdate.gmapLink = gmapLink? gmapLink : '';
             
             objectToUpdate.poster = {
-                name = posterName? posterName : ''
+                name = posterName? posterName : '',
             }
             objectToUpdate.preroll = {
-                name = prerollName? prerollName : ''
+                name = prerollName? prerollName : '',
             }
             objectToUpdate.sponsor = {
-                name = sponsorName? sponsorName : ''
+                name = sponsorName? sponsorName : '',
             }
 
             objectToUpdate.poster = {
-                link = posterLink? posterLink : ''
+                link = posterLink? posterLink : '',
             }
             objectToUpdate.preroll = {
-                link = prerollLink? prerollLink : ''
+                link = prerollLink? prerollLink : '',
             }
             objectToUpdate.sponsor = {
-                link = sponsorLink? sponsorLink : ''
+                link = sponsorLink? sponsorLink : '',
             }
 
         if(req.files.banner){ 
