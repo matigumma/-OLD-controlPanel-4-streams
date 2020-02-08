@@ -270,23 +270,23 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
             objectToUpdate.gmapLink = gmapLink? gmapLink : '';
             
             objectToUpdate.poster = {
-                name = posterName? posterName : '',
+                name: posterName? posterName : ''
             }
             objectToUpdate.preroll = {
-                name = prerollName? prerollName : '',
+                name: prerollName? prerollName : ''
             }
             objectToUpdate.sponsor = {
-                name = sponsorName? sponsorName : '',
+                name: sponsorName? sponsorName : ''
             }
 
             objectToUpdate.poster = {
-                link = posterLink? posterLink : '',
+                link: posterLink? posterLink : ''
             }
             objectToUpdate.preroll = {
-                link = prerollLink? prerollLink : '',
+                link: prerollLink? prerollLink : ''
             }
             objectToUpdate.sponsor = {
-                link = sponsorLink? sponsorLink : '',
+                link: sponsorLink? sponsorLink : ''
             }
 
         if(req.files.banner){ 
@@ -298,42 +298,42 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
         }
         if(req.files.prerollFile){ 
             objectToUpdate.preroll = {
-                file = req.files.prerollFile[0].filename
+                file: req.files.prerollFile[0].filename
             }
         }
         if(req.files.sponsorFile){ 
             objectToUpdate.sponsor = {
-                file = req.files.sponsorFile[0].filename
+                file: req.files.sponsorFile[0].filename
             }
         }
         if(req.files.ad1File){ 
             objectToUpdate.ad1 = {
-                file = req.files.ad1File[0].filename
+                file: req.files.ad1File[0].filename
             }
         }
         if(req.files.ad2File){ 
             objectToUpdate.ad2 = {
-                file = req.files.ad2File[0].filename
+                file: req.files.ad2File[0].filename
             }
         }
         if(req.files.ad3File){ 
             objectToUpdate.ad3 = {
-                file = req.files.ad3File[0].filename
+                file: req.files.ad3File[0].filename
             }
         }
         if(req.files.ad4File){ 
             objectToUpdate.ad4 = {
-                file = req.files.ad4File[0].filename
+                file: req.files.ad4File[0].filename
             }
         }
         if(req.files.ad5File){ 
             objectToUpdate.ad5 = {
-                file = req.files.ad5File[0].filename
+                file: req.files.ad5File[0].filename
             }
         }
         if(req.files.ad6File){ 
             objectToUpdate.ad6 = {
-                file = req.files.ad6File[0].filename
+                file: req.files.ad6File[0].filename
             }
         }
 
