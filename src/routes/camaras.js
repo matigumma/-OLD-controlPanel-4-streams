@@ -2,7 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const multer = require('multer');
 const uuid = require('uuid/v4');
-//const fs = require('fs');
+
 //multer
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/content'),
@@ -53,7 +53,6 @@ const Cam = require("../models/Camara");//model
 //show list cams 
 router.get('/camaras', isAuthenticated, async (req, res) => {
     const camaras = await Cam.find().sort({ name: "asc" });
-    console.log('camaras: ',camaras)
     res.render('camaras/list-cams', {
         camaras, 
         helpers: ifeqHelper 
@@ -69,7 +68,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
 
         //add cam
         router.post('/camaras/add', multerManager, isAuthenticated, async (req, res) => {
-            const {
+            const { 
                 name, 
                 slug, 
                 title, 
@@ -80,7 +79,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
                 gmapLink,
                 posterName, prerollName, sponsorName, ad1Name, ad2Name, ad3Name, ad4Name, ad5Name, ad6Name,
                 posterLink, prerollLink, sponsorLink, ad1Link, ad2Link, ad3Link, ad4Link, ad5Link, ad6Link
-            } = req.body;
+             } = req.body;
             let { enable, visible } = req.body;
             const errors = [];
 
@@ -101,6 +100,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
             } else {
                 if(!enable){enable="off"};
                 if(!visible){visible="off"};
+
                 let banner;
                 if(req.files.banner){ banner = req.files.banner[0].filename;}
                 //console.log('req.files: ',req.files)
@@ -179,15 +179,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
 //show edit cam by id
 router.get('/camaras/edit/:id', isAuthenticated, async (req, res) => {
     const thiscam = await Cam.findById(req.params.id);
-/*     const folderPath = '../public/content';
-    const isFile = fileName => {
-        return fs.lstatSync(fileName).isFile()
-    };
-    const imagenes = fs.readdirSync(folderPath).map(fileName => {
-        return path.join(folderPath, fileName).filter(isFile)
-    }); */
-    res.render('camaras/cam', { 
-        thiscam,
+    res.render('camaras/cam', { thiscam,
         helpers: ifeqHelper
     })
 });
@@ -247,26 +239,26 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
 
             objectToUpdate.title = title;
             objectToUpdate.source = source;
-            objectToUpdate.ffmpeg = ffmpeg;
+            objectToUpdate.ffmpeg = ffmpeg? ffmpeg : '';
 
         if (!enable) { enable = "off" };
             objectToUpdate.enable = enable;
         if (!visible) { visible = "off" };
             objectToUpdate.visible = visible;
 
-            objectToUpdate.lat = lat;
-            objectToUpdate.lng = lng;
-            objectToUpdate.ciudad = ciudad;
-            objectToUpdate.pais = pais;
-            objectToUpdate.gmapLink = gmapLink;
+            objectToUpdate.lat = lat? lat : '';
+            objectToUpdate.lng = lng? lng : '';
+            objectToUpdate.ciudad = ciudad? ciudad : '';
+            objectToUpdate.pais = pais? pais : '';
+            objectToUpdate.gmapLink = gmapLink? gmapLink : '';
             
-            objectToUpdate.poster.name = posterName;
-            objectToUpdate.preroll.name = prerollName;
-            objectToUpdate.sponsor.name = sponsorName;
+            objectToUpdate.poster.name = posterName? posterName : '';
+            objectToUpdate.preroll.name = prerollName? prerollName : '';
+            objectToUpdate.sponsor.name = sponsorName? sponsorName : '';
 
-            objectToUpdate.poster.link = posterLink;
-            objectToUpdate.preroll.link = prerollLink;
-            objectToUpdate.sponsor.link = sponsorLink;
+            objectToUpdate.poster.link = posterLink? posterLink : '';
+            objectToUpdate.preroll.link = prerollLink? prerollLink : '';
+            objectToUpdate.sponsor.link = sponsorLink? sponsorLink : '';
 
         if(req.files.banner){ 
             objectToUpdate.banner = req.files.banner[0].filename;}
@@ -291,7 +283,7 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
 
         await Cam.findByIdAndUpdate(req.params.id, objectToUpdate).catch(err=>{
             req.flash('msg_error', 'No se pudo actualizar!');
-            res.render('camaras/add-cam',{
+            res.render('camaras/cam',{
                 errors,
                 name, slug, title, source, ffmpeg, enable, visible, lat, lng, ciudad, pais, gmapLink,
                 posterName, prerollName, sponsorName, ad1Name, ad2Name, ad3Name, ad4Name, ad5Name, ad6Name,
