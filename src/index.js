@@ -6,7 +6,7 @@ const expressSession = require("express-session");
 const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
-require('dotenv').config({ path: path.resolve(__dirname, './../.env') });
+require('dotenv').config();
 const { appConfig, dbConfig } = require('./config/config');
 
 //initializations
