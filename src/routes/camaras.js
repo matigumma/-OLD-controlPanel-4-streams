@@ -281,8 +281,10 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
         if(req.files.ad6File){ 
             objectToUpdate.ad6.file = req.files.ad6File[0].filename;}
 
-        await Cam.findByIdAndUpdate(req.params.id, objectToUpdate).catch(err=>{
-            console.log('error l.285: ',err);
+        try {
+            await Cam.findByIdAndUpdate(req.params.id, objectToUpdate)
+        } catch (error) {
+            console.log('error l.285: ',error);
             req.flash('msg_error', 'No se pudo actualizar!');
             res.render('camaras/cam',{
                 errors,
@@ -291,8 +293,19 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
                 posterLink, prerollLink, sponsorLink, ad1Link, ad2Link, ad3Link, ad4Link, ad5Link, ad6Link,
                 helpers: ifeqHelper
             });
-            return;
-        });
+        }
+        // await Cam.findByIdAndUpdate(req.params.id, objectToUpdate).catch(err=>{
+        //     console.log('error l.285: ',err);
+        //     req.flash('msg_error', 'No se pudo actualizar!');
+        //     res.render('camaras/cam',{
+        //         errors,
+        //         name, slug, title, source, ffmpeg, enable, visible, lat, lng, ciudad, pais, gmapLink,
+        //         posterName, prerollName, sponsorName, ad1Name, ad2Name, ad3Name, ad4Name, ad5Name, ad6Name,
+        //         posterLink, prerollLink, sponsorLink, ad1Link, ad2Link, ad3Link, ad4Link, ad5Link, ad6Link,
+        //         helpers: ifeqHelper
+        //     });
+        //     return;
+        // });
         req.flash('msg_exito', 'Camara modificada!');
         res.redirect('/camaras');
     }
