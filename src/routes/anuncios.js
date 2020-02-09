@@ -160,17 +160,15 @@ router.put('/anuncios/edit/:id', multerManager, isAuthenticated, async (req, res
         });
         return;
     }else{
+        let objetoNuevo = {}
+        objetoNuevo.pos = pos
+        objetoNuevo.title = title
+        objetoNuevo.link = link
+        objetoNuevo.extras = { titular, fechaInicio, fechaFin };
+        req.files.image[0].filename ? objetoNuevo.image = req.files.image[0].filename : objetoNuevo.image = ''
 
-        let image;
-console.log('uploaded image: ',req.files.image)
-        if(req.files.image){ image = req.files.image[0].filename; }
-        let extras = { titular, fechaInicio, fechaFin };
-    //console.log(req.files);
-    /*     const newAd = new Ad({ 
-            pos, image, title, link, extras
-        }); */
         try {
-            await Ad.findByIdAndUpdate(req.params.id, {pos, image, title, link, extras })
+            await Ad.findByIdAndUpdate(req.params.id, objetoNuevo)
         } catch (error) {
             req.flash('msg_error', `No se pudo actualizar!, error l.173: ${error}`);
             res.render('anuncios/add-ads',{
