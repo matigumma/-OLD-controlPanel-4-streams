@@ -52,15 +52,21 @@ const Cam = require("../models/Camara");//model
 
 //show list cams 
 router.get('/camaras', isAuthenticated, async (req, res) => {
+    let camaras
     try {
-        const camaras = await Cam.find().sort({ name: "asc" });
-        res.render('camaras/list-cams', {
-            camaras, 
-            helpers: ifeqHelper 
-        })
+        camaras = await Cam.find().sort({ name: "asc" });
     } catch (error) {
         console.log(error)
+        req.flash('msg_error', `Error while try to get list of cams: l.57: ${error}`); 
+        res.render('index', {
+            helpers: ifeqHelper 
+        })
+        return;
     }
+    res.render('camaras/list-cams', {
+        camaras, 
+        helpers: ifeqHelper 
+    })
 });
 
 //show add new cam
@@ -83,7 +89,7 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
                 gmapLink,
                 posterName, prerollName, sponsorName, ad1Name, ad2Name, ad3Name, ad4Name, ad5Name, ad6Name,
                 posterLink, prerollLink, sponsorLink, ad1Link, ad2Link, ad3Link, ad4Link, ad5Link, ad6Link
-             } = req.body;
+            } = req.body;
             let { enable, visible } = req.body;
             const errors = [];
 
@@ -191,14 +197,21 @@ router.get('/camaras/add', isAuthenticated, (req, res) => {
 
 //show edit cam by id
 router.get('/camaras/edit/:id', isAuthenticated, async (req, res) => {
+    let thiscam
     try {
-        const thiscam = await Cam.findById(req.params.id);
-        res.render('camaras/cam', { thiscam,
-            helpers: ifeqHelper
-        })
+        thiscam = await Cam.findById(req.params.id);
     } catch (error) {
         console.log(error)
+        req.flash('msg_error', `Error while try to get cam l.201 ${error}`); 
+        res.render('camaras/list-cams', { thiscam,
+            helpers: ifeqHelper
+        })
+        return;
     }
+    res.render('camaras/cam', { 
+        thiscam,
+        helpers: ifeqHelper
+    })
 });
 /* router.put('/camaras/quitar/anuncio/:id', isAuthenticated, async (req, res) => {
     //req.params.id
@@ -341,7 +354,7 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
             await Cam.findByIdAndUpdate(req.params.id, objectToUpdate)
         } catch (error) {
             console.log('error l.285: ',error);
-            req.flash('msg_error', 'No se pudo actualizar!');
+            req.flash('msg_error', `o se pudo actualizar .l.354: ${error}`);
             res.render('camaras/cam',{
                 errors,
                 name, slug, title, source, ffmpeg, enable, visible, lat, lng, ciudad, pais, gmapLink,
@@ -349,6 +362,7 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
                 posterLink, prerollLink, sponsorLink, ad1Link, ad2Link, ad3Link, ad4Link, ad5Link, ad6Link,
                 helpers: ifeqHelper
             });
+            return;
         }
         // await Cam.findByIdAndUpdate(req.params.id, objectToUpdate).catch(err=>{
         //     console.log('error l.285: ',err);
@@ -371,11 +385,14 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
 router.delete('/camaras/delete/:id', isAuthenticated, async (req, res) =>{
     try {
         await Cam.findByIdAndDelete(req.params.id);
-        req.flash('msg_info', 'Camara borrada!');
-        res.redirect('/camaras');
     } catch (error) {
         console.log(error)
+        req.flash('msg_error', `Error al intentar borrar la camara! l.387: ${error}`);
+        res.redirect('/camaras');
+        return;
     }
+    req.flash('msg_info', 'Camara borrada!');
+    res.redirect('/camaras');
 })
 
 module.exports = router;

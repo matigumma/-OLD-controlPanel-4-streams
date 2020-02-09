@@ -43,17 +43,25 @@ const Ad = require("../models/Ads");//model
 
 //show list ads
 router.get('/anuncios', isAuthenticated, async (req, res) => {
-    const anuncios = await Ad.find().sort({ pos: "asc" });
-    let enable = 'off';
-    let today = Date.now;
-    if(anuncios.fechaInicio < today && today < anuncios.fechaFin){
-        enable = 'on';
+    try {
+        const anuncios = await Ad.find().sort({ pos: "asc" });
+    /*    let enable = 'off';
+        let today = Date.now;
+        if(anuncios.fechaInicio < today && today < anuncios.fechaFin){
+            enable = 'on';
+        } */
+        res.render('anuncios/list-ads', {
+            anuncios, 
+            helpers: ifeqHelper 
+        })
+    } catch (error) {
+        const anuncios = []
+        req.flash('msg_error', `Hubo un error al recuperar el listado de anuncios!: ${error}`);
+        res.render('anuncios/list-ads', {
+            anuncios, 
+            helpers: ifeqHelper 
+        })
     }
-    res.render('anuncios/list-ads', {
-        anuncios, 
-        enable,
-        helpers: ifeqHelper 
-    })
 });
 
 //show add new ad
@@ -80,17 +88,23 @@ router.post('/anuncios/add', multerManager, isAuthenticated, async (req, res) =>
         });
         return;
     } else {
-        let image;
-        let quant = await Ad.count(function(err, count){
-            if(err){
-                console.log('quant: null');
-                return null;
-            }
-            console.log('quant: ',count);
-
-            return count;
-        });
-        const pos = quant;
+        let image, pos;
+        try {
+            let quant = await Ad.count(function(err, count){
+                if(err){
+                    console.log('quant: null');
+                    return null;
+                }
+                console.log('quant: ',count);
+                return count;
+            });
+            pos = quant;
+        } catch (error) {
+            req.flash('msg_error', 'Error saving to Database, pos.count l.93'); 
+            res.render('anuncios/add-ads', {
+                pos, link, title, titular, fechaInicio, fechaFin, helpers: ifeqHelper });
+            return;
+        }
 
         if(req.files.image){ image = req.files.image[0].filename; }
 
@@ -99,14 +113,14 @@ router.post('/anuncios/add', multerManager, isAuthenticated, async (req, res) =>
         const newAd = new Ad({ 
             pos, image, title, link, extras
         });
-
-        await newAd.save().catch(err => {
-            req.flash('msg_error', 'Error saving to Database'); 
+        try {
+            await newAd.save()
+        } catch (error) {
+            req.flash('msg_error', 'Error saving to Database, newAd.save() l.117'); 
             res.render('anuncios/add-ads', {
                 pos, link, title, titular, fechaInicio, fechaFin, helpers: ifeqHelper });
             return;
-        });
-
+        }
         req.flash('msg_exito', 'Anuncio agregado!');
         res.redirect('/anuncios');
     }
@@ -114,8 +128,16 @@ router.post('/anuncios/add', multerManager, isAuthenticated, async (req, res) =>
 
 //show edit ad by id
 router.get('/anuncios/edit/:id', isAuthenticated, async (req, res) => {
-    const thisad = await Ad.findById(req.params.id);
-    console.log(thisad);
+    let thisad
+    try {
+        thisad = await Ad.findById(req.params.id);
+    } catch (error) {
+        req.flash('msg_error', `Error while try to get Ad data, Ad.findById() l.133 : ${error}`); 
+        res.render('anuncios/list-ads', { thisad,
+            helpers: ifeqHelper
+        })
+        return;
+    }
     res.render('anuncios/ads', { thisad,
         helpers: ifeqHelper
     })
@@ -147,16 +169,17 @@ router.put('/anuncios/edit/:id', multerManager, isAuthenticated, async (req, res
     /*     const newAd = new Ad({ 
             pos, image, title, link, extras
         }); */
-        
-        await Ad.findByIdAndUpdate(req.params.id, {pos, image, title, link, extras }).catch(err=>{
-            req.flash('msg_error', 'No se pudo actualizar!');
+        try {
+            await Ad.findByIdAndUpdate(req.params.id, {pos, image, title, link, extras })
+        } catch (error) {
+            req.flash('msg_error', `No se pudo actualizar!, error l.173: ${error}`);
             res.render('anuncios/add-ads',{
                 errors,
                 pos, title, link, titular, fechaInicio, fechaFin,
                 helpers: ifeqHelper
             });
             return;
-        });
+        }
         req.flash('msg_exito', 'Anuncio modificado!');
         res.redirect('/anuncios');
     }
@@ -164,7 +187,13 @@ router.put('/anuncios/edit/:id', multerManager, isAuthenticated, async (req, res
 
 //delete ad
 router.delete('/anuncios/delete/:id', isAuthenticated, async (req, res) =>{
-    await Ad.findByIdAndDelete(req.params.id);
+    try {
+        await Ad.findByIdAndDelete(req.params.id)
+    } catch (error) {
+        req.flash('msg_error', `Error al intentar borrar el anuncio l.191: ${error}`);
+        res.redirect('/anuncios');
+        return;
+    }
     req.flash('msg_info', 'Anuncio borrada!');
     res.redirect('/anuncios');
 })

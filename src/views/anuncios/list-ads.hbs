@@ -8,8 +8,8 @@
             <div role="button"  onclick="location.assign('/anuncios/edit/{{_id}}');" class="card-header">
                 <div class="row justify-content-between">
                     <div class="col custom-control custom-switch"> 
-                        <input type="checkbox" {{#if_eq enable "on"}}checked{{/if_eq}} class="custom-control-input"
-                        alt="{{_id}}" disabled id="{{_id}}"> 
+                        {{!-- <input type="checkbox" {{#if_eq enable "on"}}checked{{/if_eq}} class="custom-control-input"
+                        alt="{{_id}}" disabled id="{{_id}}">  --}}
                         <label class="custom-control-label {{#if_eq enable 'off'}}text-white{{/if_eq}}" for="{{_id}}">{{title}}</label> 
                     </div>
                 </div>
