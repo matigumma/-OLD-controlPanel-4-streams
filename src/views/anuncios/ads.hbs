@@ -12,18 +12,19 @@
                         <label for="title">Titulo del anuncio</label>
                     </div>
                 
-                <div class="form-row my-2" style="min-height:165px;">
+                    <div class="form-row my-2" style="min-height:165px;">
                         <div class="col-md">
                             <div class="form-group">
                                 <input type="file" name="image" class="custom-file-input" id="image" lang="es">
                                 <label class="custom-file-label" for="image">Imagen </label>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-label-group">
                         <div class="col-md text-center">
-                            {{#if thisad.image }}<img style="border-radius: 5px;" src="/content/ads/{{thisad.image}}" width="300px">{{/if}}
+        {{#if thisad.image }}<img style="border-radius: 5px;" src="/content/ads/{{thisad.image}}" width="300px">{{/if}}
                         </div>
-                </div>
-
+                    </div>
                     <div class="form-label-group">
                         <input id="titular" type="text" name="titular" value="{{thisad.titular}}" placeholder="Titular/dueño" class="form-control" required>
                         <label for="titular">Titular/dueño</label>
