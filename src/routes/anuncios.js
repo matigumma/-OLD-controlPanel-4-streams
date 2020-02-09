@@ -162,7 +162,7 @@ router.put('/anuncios/edit/:id', multerManager, isAuthenticated, async (req, res
     }else{
 
         let image;
-
+console.log('uploaded image: ',req.files.image)
         if(req.files.image){ image = req.files.image[0].filename; }
         let extras = { titular, fechaInicio, fechaFin };
     //console.log(req.files);
