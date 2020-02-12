@@ -56,7 +56,18 @@ router.get('/api/cameras/:id', async (req, res) => {
     }
 });
 
-
+router.get('/api/streams-list', async (req, res) =>{
+    try {
+        const list = await Cam.find().select('name source ffmpeg enable');
+        if(list.length>0) {
+            res.status(200).json(list);
+        } else {
+            res.status(204);
+        }
+    } catch (e) {
+        res.status(404).send('Error handling db');
+    }
+});
 
 //status para los resstreamers
 router.get('/api/status-list', async (req, res) => {
