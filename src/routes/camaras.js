@@ -55,6 +55,7 @@ router.get('/camaras', isAuthenticated, async (req, res) => {
     let camaras
     try {
         camaras = await Cam.find().sort({ name: "asc" });
+        console.log(camaras);
     } catch (error) {
         console.log(error)
         req.flash('msg_error', `Error while try to get list of cams: l.57: ${error}`); 
@@ -282,33 +283,22 @@ router.put('/camaras/edit/:id', multerManager, isAuthenticated, async (req, res)
             objectToUpdate.pais = pais? pais : '';
             objectToUpdate.gmapLink = gmapLink? gmapLink : '';
             
+            if(req.files.banner){ 
+                objectToUpdate.banner = req.files.banner[0].filename;}
+                
             objectToUpdate.poster = {
-                name: posterName? posterName : ''
+                name: posterName? posterName : '',
+                link: posterLink? posterLink : '',
+                file: req.files.posterFile && req.files.posterFile[0].filename
             }
             objectToUpdate.preroll = {
-                name: prerollName? prerollName : ''
+                name: prerollName? prerollName : '',
+                link: prerollLink? prerollLink : '',
             }
             objectToUpdate.sponsor = {
-                name: sponsorName? sponsorName : ''
-            }
-
-            objectToUpdate.poster = {
-                link: posterLink? posterLink : ''
-            }
-            objectToUpdate.preroll = {
-                link: prerollLink? prerollLink : ''
-            }
-            objectToUpdate.sponsor = {
+                name: sponsorName? sponsorName : '',
                 link: sponsorLink? sponsorLink : ''
             }
-
-        if(req.files.banner){ 
-            objectToUpdate.banner = req.files.banner[0].filename;}
-        if(req.files.posterFile){ 
-            objectToUpdate.poster = {
-                file: req.files.posterFile[0].filename
-            }
-        }
         if(req.files.prerollFile){ 
             objectToUpdate.preroll = {
                 file: req.files.prerollFile[0].filename
