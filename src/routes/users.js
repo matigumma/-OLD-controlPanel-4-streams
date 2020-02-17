@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require('../models/User');
 const passport = require('passport');
-const fetch = require("node-fetch");
+const axios =  require('axios')
 const { isAuthenticated } = require('../helpers/auth');
 const ifeqHelper = {
     if_eq: function (a, b, opts) {
@@ -14,13 +14,12 @@ const ifeqHelper = {
 
 //show front-end user list
 router.get('/users/listado-front', isAuthenticated, async (req, res) => {
-    fetch("https://beta.freewaves.live/api/regdeusuarios", {
+    axios.get("https://beta.freewaves.live/api/regdeusuarios", {
         headers: {
-            "Authorization": `Basic ${base64.encode(`mati2620:fran2011`)}`
+            "Authorization": "Basic bWF0aTI2MjA6ZnJhbjIwMTE="
         },
     }).then(response => {
-        if (!response.ok) throw new Error(response.status);
-        let listado = response.json();
+        let listado = response.data.json();
         res.render('users/listado-front', {
             listado,
             helpers: ifeqHelper });
