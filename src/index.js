@@ -19,22 +19,12 @@ app.use(cors());
 //settings
 app.set('views', path.join(__dirname, 'views'));
 
-var handle = hbs.create({
+app.engine('.hbs',hbs({
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
     extname: '.hbs'
-});
-handle._renderTemplate = function (template, context, options) {
-
-    options.allowProtoMethodsByDefault = true;
-    options.allowProtoPropertiesByDefault = true;
-
-    return template(context, options);
-};
-
-
-app.engine('.hbs',handle);
+}));
 app.set('view engine', '.hbs')
 
 //middlewares
