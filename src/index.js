@@ -1,8 +1,6 @@
 const express = require("express");
 const path = require("path");
-const HandleB = require("express-handlebars");
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
-const hbs = allowInsecurePrototypeAccess(HandleB);
+const hbs = require("express-handlebars");
 const methodOverride = require("method-override");
 const expressSession = require("express-session");
 const flash = require('connect-flash');
@@ -21,12 +19,22 @@ app.use(cors());
 //settings
 app.set('views', path.join(__dirname, 'views'));
 
-app.engine('.hbs',hbs({
+var handle = hbs.create({
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
     extname: '.hbs'
-}));
+});
+handle._renderTemplate = function (template, context, options) {
+
+    options.allowProtoMethodsByDefault = true;
+    options.allowProtoPropertiesByDefault = true;
+
+    return template(context, options);
+};
+
+
+app.engine('.hbs',handle);
 app.set('view engine', '.hbs')
 
 //middlewares
