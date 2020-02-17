@@ -3,7 +3,7 @@
  <button class="btn btn-secondary btn-block my-2" onclick="location.assign('/camaras/add');">Agregar nueva camara</button>
 
  {{#if camaras}}
-    {{#each camaras as | camara}}
+    {{#each camaras as | camara|}}
         <div class="card {{#if_eq camara.enable 'on'}} bg-light {{#if_eq camara.visible 'on'}}border-primary{{/if_eq}}{{else}} bg-secondary{{/if_eq}} col-md-3 p-0 mb-2">
             <div role="button"  onclick="location.assign('/camaras/edit/{{camara._id}}');" class="card-header">
                 <div class="row justify-content-between">
