@@ -10,7 +10,7 @@ const ifeqHelper = {
 }
 
 router.get('/', (req, res) => {
-    res.render('/users/listado-front', 
+    res.render('/index', 
     {helpers: ifeqHelper});
 });
 

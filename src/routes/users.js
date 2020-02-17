@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require('../models/User');
 const passport = require('passport');
+const fetch = require("node-fetch");
 const { isAuthenticated } = require('../helpers/auth');
 const ifeqHelper = {
     if_eq: function (a, b, opts) {
