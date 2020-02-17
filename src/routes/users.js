@@ -19,7 +19,7 @@ router.get('/users/listado-front', isAuthenticated, async (req, res) => {
             "Authorization": "Basic bWF0aTI2MjA6ZnJhbjIwMTE="
         },
     }).then(response => {
-        let listado = response.data.json();
+        let listado = response.data;
         res.render('users/listado-front', {
             listado,
             helpers: ifeqHelper });
