@@ -1,0 +1,24 @@
+{{#if listado}}
+<div class="col-md-12">
+<table class="table table-md table-hover">
+    <thead>
+        <tr>
+            <th scope="col">activo?</th>
+            <th scope="col">Name</th>
+            <th scope="col">email</th>
+            <th scope="col">created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each listado}}
+        <tr>
+            <td>{{active}}</td>
+            <td>{{local.name}}</td>
+            <td>{{email}}</td>
+            <td>{{creationDate}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
+{{/if}}

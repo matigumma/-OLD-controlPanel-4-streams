@@ -11,6 +11,21 @@ const ifeqHelper = {
     }
 };
 
+//show front-end user list
+router.get('/users/listado-front', isAuthenticated, async (req, res) => {
+    fetch("https://beta.freewaves.live/api/regdeusuarios", {
+        headers: new Headers({
+            "Authorization": `Basic ${base64.encode(`mati2620:fran2011`)}`
+        }),
+    }).then(response => {
+        if (!response.ok) throw new Error(response.status);
+        let listado = response.json();
+        res.render('users/listado-front', {
+            listado,
+            helpers: ifeqHelper });
+    })
+});
+
 //show user list
 router.get('/users/list', isAuthenticated, async (req, res) => {
     const listado = await User.find();
