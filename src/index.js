@@ -19,12 +19,28 @@ app.use(cors());
 //settings
 app.set('views', path.join(__dirname, 'views'));
 
-app.engine('.hbs',hbs({
+var hba = hbs.create({
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
     extname: '.hbs'
-}));
+ });
+ 
+ hba._renderTemplate = function (template, context, options) {
+ 
+    options.allowProtoMethodsByDefault = true;
+    options.allowProtoPropertiesByDefault = true;
+ 
+    return template(context, options);
+ };
+
+/* app.engine('.hbs',hbs({
+    defaultLayout: 'main',
+    layoutsDir: path.join(app.get('views'), 'layouts'),
+    partialsDir: path.join(app.get('views'), 'partials'),
+    extname: '.hbs'
+})); */
+app.engine('.hbs',hbs);
 app.set('view engine', '.hbs')
 
 //middlewares
