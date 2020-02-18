@@ -19,7 +19,7 @@ app.use(cors());
 //settings
 app.set('views', path.join(__dirname, 'views'));
 
-var hba = hbs.create({
+var hba = hbs({
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
