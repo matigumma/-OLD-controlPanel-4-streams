@@ -40,7 +40,7 @@ var hba = hbs.create({
     partialsDir: path.join(app.get('views'), 'partials'),
     extname: '.hbs'
 })); */
-app.engine('.hbs',hbs);
+app.engine('.hbs',hba);
 app.set('view engine', '.hbs')
 
 //middlewares
